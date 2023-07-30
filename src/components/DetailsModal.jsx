@@ -117,6 +117,7 @@ export default function DetailsModal(){
                             w='43%' 
                             borderColor='#000AFF' 
                             borderWidth='3px'
+                            bg='white'
                             position='absolute'
                             bottom='15px'
                             right='20px'
