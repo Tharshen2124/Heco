@@ -3,7 +3,7 @@ import { Avatar, HStack, VStack, Text, Box } from "@chakra-ui/react";
 export const Review = () => {
   return (
     <Box bg="gray.100" borderRadius="10px" boxShadow="xl">
-      <HStack px="5" py="5" gap="3">
+      <HStack px="4" py="4" gap="3">
         <Avatar alignSelf="flex-start" boxSize="1.7em" />
         <VStack gap={2}>
           <HStack justifyContent="space-between" w="100%">
