@@ -14,8 +14,7 @@ export const Review = () => {
               fontSize="sm"
               fontWeight="semibold"
               color="gray.500"
-              alignItems={"right"}
-            >
+              alignItems={"right"}>
               One hour ago
             </Text>
           </HStack>
