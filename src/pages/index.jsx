@@ -102,7 +102,6 @@ export default function Home() {
             <ModalBody p="20px">
               {Object.keys(weights).map((i) => (
                 <Flex direction="row" w="100%">
-                  {console.log(i)}
                   <Text>{i.charAt(0).toUpperCase() + i.slice(1)}</Text>
                   <Spacer />
                   <NumberStepper
@@ -155,7 +154,7 @@ export default function Home() {
             <Flex
               direction="row"
               position="absolute"
-              bottom="-50px"
+              bottom={["-50px", "-60px", "-70px"]}
               w="100vw"
               gap={2}
             >
