@@ -9,16 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@azure/ai-text-analytics": "^5.1.0",
     "@chakra-ui/next-js": "^2.1.5",
     "@chakra-ui/react": "^2.8.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@types/mapbox-gl": "^2.7.12",
     "dotenv": "^16.3.1",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
     "framer-motion": "^10.15.0",
+    "fuse.js": "^6.6.2",
+    "mapbox-gl": "^2.15.0",
     "next": "13.4.12",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-map-gl": "^7.1.3"
   }
 }
