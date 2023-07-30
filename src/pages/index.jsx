@@ -1,4 +1,4 @@
-import { Flex, Spacer, VStack, Text, Heading, InputGroup, InputLeftElement, Input, Button, HStack, Image as ChakraImage, Box, Center } from "@chakra-ui/react";
+import { Flex, Spacer, VStack, Text, Heading, InputGroup, InputLeftElement, Input, Button, HStack, Image as ChakraImage, Box, Center, Drawer } from "@chakra-ui/react";
 import {
     Modal,
     ModalOverlay,
@@ -17,7 +17,7 @@ import Image from "next/image";
 import MapAndMarkers from '@/components/Map';
 import NumberStepper from "@/components/NumberStepper";
 import InfoModal from "@/components/InfoModal";
-
+import DetailsModal from "@/components/DetailsModal";
 
 export default function Home() {
     const user = {
@@ -68,6 +68,7 @@ export default function Home() {
 
     const { isOpen: isOpenWeight, onOpen: onOpenWeight, onClose: onCloseWeight } = useDisclosure()
     const { isOpen: isOpenInfo, onOpen: onOpenInfo, onClose: onCloseInfo } = useDisclosure()
+    const { isOpen: isOpenDetails, onOpen: onOpenDetails, onClose: onCloseDetails } = useDisclosure()
     const [weights, setWeights] = useState({
         'distance' : 3,
         'availability': 2,
@@ -111,6 +112,9 @@ export default function Home() {
         <Modal isOpen={isOpenInfo} onClose={onCloseInfo} isCentered size={'sm'}>
             <InfoModal/>
         </Modal>
+        <Drawer isOpen={isOpenDetails} onClose={onCloseDetails} placement='bottom'>
+            <DetailsModal/>
+        </Drawer>
         <Modal isOpen={isOpenWeight} onClose={onCloseWeight} isCentered size={'sm'}>
             <ModalOverlay />
             <ModalContent>
@@ -247,6 +251,7 @@ export default function Home() {
                     </Center>
                 </Button>
                 <Button maxW='container.md' w='100%' bg='#000AFF'
+                    onClick={onOpenDetails}
                     css={{
                         '&:hover' : {
                             'backgroundColor' : '#020ad4' 
