@@ -179,8 +179,7 @@ export default function DetailsModal() {
                       <Text
                         color="#000AFF"
                       >
-                        
-                        Create Review
+                        View Details
                       </Text>
                     </Center>
                   </Button>
