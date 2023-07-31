@@ -1,4 +1,4 @@
-import { Flex, Spacer, VStack, Text, Heading, InputGroup, InputLeftElement, Input, Button, HStack, Image as ChakraImage, Box, Center, Drawer } from "@chakra-ui/react";
+import { Flex, Spacer, VStack, Text, Heading,  Button, HStack, Image as ChakraImage, Box, Center, Drawer } from "@chakra-ui/react";
 import {
     Modal,
     ModalOverlay,
@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react'
 import { v4 } from 'uuid';
 import { useState, useRef } from "react";
-import Search from '../../public/search.svg';
+import SearchBar from "@/components/SearchBar";
 import Customize from '../../public/customize.svg';
 import Locate from '../../public/locate.svg';
 import Info from '../../public/info.svg';
@@ -66,6 +66,8 @@ export default function Home() {
                 status: "mod_suitable"
             }
     ]
+    const facilities = [{ "title": "Hope General Hospital" },{ "title": "Mercy Medical Center" },{ "title": "Saint Luke's Hospital" },{ "title": "Grace Memorial Hospital" },{ "title": "Unity Health Center" },{ "title": "Royal Oak Medical Center" },{ "title": "Sunset Valley Hospital" },{ "title": "Maplewood Community Hospital" },{ "title": "Riverdale Regional Medical Center" },{ "title": "Oakridge General Hospital" },{ "title": "Lakeview Health Services" },{ "title": "Greenfield Medical Clinic" },{ "title": "Pinecrest Hospital" },{ "title": "Briarwood Healthcare Center" },{ "title": "Meadowbrook General Hospital" },{ "title": "Cedar Grove Medical Center" },{ "title": "Sunnydale Surgical Hospital" },{ "title": "Hillside Children's Hospital" },{ "title": "Springfield Women's Clinic" },{ "title": "Westside Cardiac Care" }];
+
 
     const { isOpen: isOpenWeight, onOpen: onOpenWeight, onClose: onCloseWeight } = useDisclosure()
     const { isOpen: isOpenInfo, onOpen: onOpenInfo, onClose: onCloseInfo } = useDisclosure()
@@ -157,12 +159,7 @@ export default function Home() {
                         <Spacer/>
                         <ChakraImage src={user.image} alt='user-avatar' w='40px' h='40px' style={{borderRadius: '100%'}}/>
                     </Flex>
-                    <InputGroup>
-                        <InputLeftElement>
-                            <Image src={Search} alt='search-icon'/>
-                        </InputLeftElement>
-                        <Input type='tel' placeholder='Search...' borderRadius={'20px'} boxShadow={'md'}/>
-                    </InputGroup>
+                    <SearchBar facilities={facilities}/>
                 </VStack>
                 <Flex
                     direction={'row'}
