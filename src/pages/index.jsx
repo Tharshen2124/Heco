@@ -39,33 +39,23 @@ import { v4 } from "uuid";
 import DetailsModal from "@/components/DetailsModal";
 
 export default function Home() {
-  const user = {
+  const [user, setUser] = useState({
     image:
       "https://lh3.googleusercontent.com/ogw/AGvuzYa4OMQLnolXOBOumOzowan6axmJHyDwyn-gNUND=s32-c-mo",
-  };
-  const tags = [
-    "General",
-    "Physiotherapy",
-    "Paramedic",
-    "Internal Medicine",
-    "Pediatrics",
-    "Obstetrics and Gynecology (OB/GYN)",
-    "Surgery",
-    "Psychiatry",
-    "Surgery",
-    "Psychiatry",
-    "Anesthesiology",
-    "Cardiology",
-    "Orthopedics",
-    "Radiology",
-    "Family Medicine",
-    "Anesthesiology",
-    "Cardiology",
-    "Orthopedics",
-    "Radiology",
-    "Family Medicine",
-  ];
-  const markers = [
+  });
+  const [tags, setTags] = useState({
+    General: true,
+    Physiotherapy: false,
+    Paramedic: true,
+    "Internal Medicine": false,
+    Pediatrics: false,
+    "Obstetrics and Gynecology (OB/GYN)": false,
+    Surgery: false,
+    Psychiatry: true,
+    Surgery: false,
+    Psychiatry: false,
+  });
+  const [markers, setMarkers] = useState([
     {
       longitude: 101.617,
       latitude: 3.064785,
@@ -81,9 +71,9 @@ export default function Home() {
       latitude: 3.07,
       status: "mod_suitable",
     },
-  ];
+  ]);
 
-  const facilities = [
+  const [facilities, setFacilities] = useState([
     { title: "Hope General Hospital" },
     { title: "Mercy Medical Center" },
     { title: "Saint Luke's Hospital" },
@@ -104,7 +94,7 @@ export default function Home() {
     { title: "Hillside Children's Hospital" },
     { title: "Springfield Women's Clinic" },
     { title: "Westside Cardiac Care" },
-  ];
+  ]);
 
   const {
     isOpen: isOpenConfig,
@@ -130,6 +120,11 @@ export default function Home() {
     longitude: 101.61722,
     latitude: 3.064785,
   });
+  const toggleTags = (key) => {
+    const temp = { ...tags };
+    temp[key] = !temp[key];
+    setTags({ ...temp });
+  };
   const updateWeight = (key, value) => {
     const temp = { ...weight };
     temp[key] = value;
@@ -250,20 +245,23 @@ export default function Home() {
                 modules={[FreeMode]}
                 spaceBetween={10}
               >
-                {tags.map((i) => (
+                {Object.keys(tags).map((i) => (
                   <SwiperSlide style={{ width: "auto" }} key={v4()}>
                     <Tag
-                      bg="white"
+                      bg={tags[i] ? "blue" : "white"}
+                      color={tags[i] ? "white" : "black"}
                       px="20px"
                       py="10px"
                       borderRadius="10px"
                       userSelect="none"
                       fontSize="md"
+                      transition={"all 0.2s"}
                       _hover={{
                         cursor: "pointer",
                         backgroundColor: "blue",
                         color: "white",
                       }}
+                      onClick={() => toggleTags(i)}
                     >
                       {i}
                     </Tag>
