@@ -9,8 +9,6 @@ import {
   Image as ChakraImage,
   Center,
   Input,
-} from "@chakra-ui/react";
-import {
   Modal,
   ModalOverlay,
   ModalContent,
@@ -36,9 +34,11 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { v4 } from "uuid";
+import { useRouter } from "next/router";
 import DetailsModal from "@/components/DetailsModal";
 
 export default function Home() {
+  const router = useRouter();
   const [user, setUser] = useState({
     image:
       "https://lh3.googleusercontent.com/ogw/AGvuzYa4OMQLnolXOBOumOzowan6axmJHyDwyn-gNUND=s32-c-mo",
@@ -225,6 +225,12 @@ export default function Home() {
                 w="40px"
                 h="40px"
                 style={{ borderRadius: "100%" }}
+                onClick={() => router.push('/profile')}
+                transition="all 0.2s"
+                _hover={{
+                    cursor: "pointer",
+                    border: "3px solid blue"
+                }}
               />
             </Flex>
             <SearchBar facilities={facilities} />
