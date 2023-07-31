@@ -1,24 +1,23 @@
 import {
-    DrawerBody,
-    DrawerHeader,
-    DrawerOverlay,
-    DrawerContent,
-    DrawerCloseButton,
-    VStack,
-    HStack,
-    Text,
-    Flex,
-    Box,
-    Progress,
-    Spacer,
-    Divider,
-    Button,
-    Center,
-    Tag,
-  } from "@chakra-ui/react"
-import Image from 'next/image';
-import { v4 } from 'uuid';
-import hospitalPic from '../../public/hospital_cyberjaya.png';
+  DrawerBody,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  VStack,
+  HStack,
+  Text,
+  Flex,
+  Box,
+  Progress,
+  Divider,
+  Button,
+  Center,
+  Tag,
+} from "@chakra-ui/react";
+import Image from "next/image";
+import { v4 } from "uuid";
+import hospitalPic from "../../public/hospital_cyberjaya.png";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
 import { Review } from "./Review";
 import Link from "next/link";
@@ -28,17 +27,17 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 
-export default function DetailsModal(){
-    const tags = [
-      "General",
-      "Physiotherapy",
-      "Paramedic",
-      "Internal Medicine",
-      "Pediatrics",
-      "Obstetrics and Gynecology (OB/GYN)",
-      "Surgery",
-      "Psychiatry",
-    ];
+export default function DetailsModal() {
+  const tags = [
+    "General",
+    "Physiotherapy",
+    "Paramedic",
+    "Internal Medicine",
+    "Pediatrics",
+    "Obstetrics and Gynecology (OB/GYN)",
+    "Surgery",
+    "Psychiatry",
+  ];
 
     return (
       <>
@@ -176,45 +175,43 @@ export default function DetailsModal(){
                       }}
                     >
                       <Center>
-                        <Text color="white">More Details</Text>
+                        <Text color="white">View Details</Text>
                       </Center>
                     </Button>
                   </Link>
-                  <Link href="/review">
-                    <Button
-                      maxW="container.md"
-                      w="43%"
-                      borderColor="#000AFF"
-                      borderWidth="3px"
-                      bg="white"
-                      position="absolute"
-                      bottom="15px"
-                      right="20px"
-                      css={{
-                        "&:hover": {
-                          backgroundColor: "#020ad4",
-                          "& .chakra-text": {
-                            color: "white"
-                          }
-                        },
-                        "&:active": {
-                          backgroundColor: "#020ad4",
-                          "& .chakra-text": {
-                            color: "white"
-                          }
-                        },
-                      }}
-                    >
-                      <Center>
-                        <Text
-                          color="#000AFF"
-                        >
-                          
-                          Create Review
-                        </Text>
-                      </Center>
-                    </Button>
-                  </Link>
+                  <Button
+                    maxW="container.md"
+                    w="43%"
+                    borderColor="#000AFF"
+                    borderWidth="3px"
+                    bg="white"
+                    position="absolute"
+                    bottom="15px"
+                    right="20px"
+                    css={{
+                      "&:hover": {
+                        backgroundColor: "#020ad4",
+                        "& .chakra-text": {
+                          color: "white"
+                        }
+                      },
+                      "&:active": {
+                        backgroundColor: "#020ad4",
+                        "& .chakra-text": {
+                          color: "white"
+                        }
+                      },
+                    }}
+                  >
+                    <Center>
+                      <Text
+                        color="#000AFF"
+                      >
+                        
+                        Create Review
+                      </Text>
+                    </Center>
+                  </Button>
                 </HStack>
               </Flex>
             </Flex>
