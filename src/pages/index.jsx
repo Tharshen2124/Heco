@@ -6,7 +6,8 @@ import {
     ModalHeader,
     ModalBody,
     ModalCloseButton,
-    useDisclosure
+    useDisclosure,
+    Tag
 } from '@chakra-ui/react'
 import { useState, useRef } from "react";
 import Search from '../../public/search.svg';
@@ -168,15 +169,21 @@ export default function Home() {
                 >
                   {tags.map((i) => (
                     <SwiperSlide style={{ width: "auto" }}>
-                      <Button
+                      <Tag
                         bg="white"
-                        px="10px"
-                        py="5px"
+                        px="20px"
+                        py="10px"
                         borderRadius="10px"
                         userSelect="none"
+                        fontSize="md"
+                        _hover={{
+                          cursor: "pointer",
+                          backgroundColor: "blue",
+                          color: "white",
+                        }}
                       >
                         {i}
-                      </Button>
+                      </Tag>
                     </SwiperSlide>
                   ))}
                 </Swiper>
