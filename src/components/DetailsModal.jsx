@@ -192,24 +192,23 @@ export default function DetailsModal(){
                     css={{
                       "&:hover": {
                         backgroundColor: "#020ad4",
+                        "& .chakra-text": {
+                          color: "white"
+                        }
                       },
                       "&:active": {
                         backgroundColor: "#020ad4",
+                        "& .chakra-text": {
+                          color: "white"
+                        }
                       },
                     }}
                   >
                     <Center>
                       <Text
                         color="#000AFF"
-                        css={{
-                          "&:hover": {
-                            color: "white",
-                          },
-                          "&:active": {
-                            color: "white",
-                          },
-                        }}
                       >
+                        
                         Create Review
                       </Text>
                     </Center>
