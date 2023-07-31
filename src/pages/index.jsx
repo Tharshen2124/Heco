@@ -84,7 +84,28 @@ export default function Home() {
     },
   ];
 
-  const facilities = [{ "title": "Hope General Hospital" },{ "title": "Mercy Medical Center" },{ "title": "Saint Luke's Hospital" },{ "title": "Grace Memorial Hospital" },{ "title": "Unity Health Center" },{ "title": "Royal Oak Medical Center" },{ "title": "Sunset Valley Hospital" },{ "title": "Maplewood Community Hospital" },{ "title": "Riverdale Regional Medical Center" },{ "title": "Oakridge General Hospital" },{ "title": "Lakeview Health Services" },{ "title": "Greenfield Medical Clinic" },{ "title": "Pinecrest Hospital" },{ "title": "Briarwood Healthcare Center" },{ "title": "Meadowbrook General Hospital" },{ "title": "Cedar Grove Medical Center" },{ "title": "Sunnydale Surgical Hospital" },{ "title": "Hillside Children's Hospital" },{ "title": "Springfield Women's Clinic" },{ "title": "Westside Cardiac Care" }];
+  const facilities = [
+    { title: "Hope General Hospital" },
+    { title: "Mercy Medical Center" },
+    { title: "Saint Luke's Hospital" },
+    { title: "Grace Memorial Hospital" },
+    { title: "Unity Health Center" },
+    { title: "Royal Oak Medical Center" },
+    { title: "Sunset Valley Hospital" },
+    { title: "Maplewood Community Hospital" },
+    { title: "Riverdale Regional Medical Center" },
+    { title: "Oakridge General Hospital" },
+    { title: "Lakeview Health Services" },
+    { title: "Greenfield Medical Clinic" },
+    { title: "Pinecrest Hospital" },
+    { title: "Briarwood Healthcare Center" },
+    { title: "Meadowbrook General Hospital" },
+    { title: "Cedar Grove Medical Center" },
+    { title: "Sunnydale Surgical Hospital" },
+    { title: "Hillside Children's Hospital" },
+    { title: "Springfield Women's Clinic" },
+    { title: "Westside Cardiac Care" },
+  ];
 
   const {
     isOpen: isOpenWeight,
@@ -103,8 +124,7 @@ export default function Home() {
   } = useDisclosure();
   const [weights, setWeights] = useState({
     distance: 3,
-    availability: 2,
-    cost: 1,
+    cost: 2,
     sentiment: 1,
   });
   const updateWeight = (key, value) => {
@@ -174,7 +194,7 @@ export default function Home() {
                 style={{ borderRadius: "100%" }}
               />
             </Flex>
-            <SearchBar facilities={facilities}/>
+            <SearchBar facilities={facilities} />
           </VStack>
 
           <Flex
