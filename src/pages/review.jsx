@@ -12,17 +12,42 @@ import {
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
-  Box
+  Box,
+  useToast,
+  Button,
 } from "@chakra-ui/react"
 import { ArrowBackIcon } from "@chakra-ui/icons"
 import Image from 'next/image';
 import hospitalPic from '../../public/hospital_cyberjaya.png';
 import BlueButton from "@/components/BlueButton";
 import React, { useState } from "react";
+import { db } from "../../firebaseConfig";
+import { collection, addDoc } from "firebase/firestore";
 
 export default function Review() {
-  const [sliderValue, setSliderValue] = React.useState(5);
+  const [sliderValue, setSliderValue] = React.useState(0);
   const [showTooltip, setShowTooltip] = React.useState(false);
+  const toast = useToast();
+  const [review, setReview] = React.useState("");
+
+  const addReview = async () => {
+    try {
+      await addDoc(collection(db, "reviews"), {
+        rating: sliderValue,
+        review: review,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    console.log("submitted");
+    addReview();
+    setSliderValue(0);
+    setReview("");
+    toast({ title: "Review created successfully", status: "success" });
+  };
 
     return (
       <Container px={5} py={5}>
@@ -107,9 +132,18 @@ export default function Review() {
               h={275}
               borderRadius="10px"
               bg="gray.200"
+              onChange={(e) => setReview(e.target.value)}
             />
           </Flex>
-          <BlueButton text="Confirm" size="100%" mt={5}/>
+          <Button
+            mt={5}
+            w="100%"
+            bg="#000AFF"
+            color="white"
+            onClick={() => handleSubmit()}
+          >
+            Confirm
+          </Button>
         </VStack>
       </Container>
     );
