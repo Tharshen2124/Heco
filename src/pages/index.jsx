@@ -243,7 +243,6 @@ export default function Home() {
             w="100vw"
             gap={2}
           >
-            <Spacer />
             <HStack overflowX="scroll">
               <Swiper
                 slidesPerView="auto"
@@ -251,7 +250,7 @@ export default function Home() {
                 modules={[FreeMode]}
                 spaceBetween={10}
               >
-                {Object.keys(tags).map((i) => (
+                {Object.keys(tags).map((i, index) => (
                   <SwiperSlide style={{ width: "auto" }} key={v4()}>
                     <Tag
                       bg={tags[i] ? "blue" : "white"}
@@ -267,6 +266,8 @@ export default function Home() {
                         backgroundColor: "blue",
                         color: "white",
                       }}
+                      marginLeft={index === 0 ? '10px': 0}
+                      marginRight={index === tags.length-1 ? '10px': 0}
                       onClick={() => toggleTags(i)}
                     >
                       {i}
@@ -275,7 +276,6 @@ export default function Home() {
                 ))}
               </Swiper>
             </HStack>
-            <Spacer />
           </Flex>
         </VStack>
 
