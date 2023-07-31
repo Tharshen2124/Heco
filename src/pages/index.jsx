@@ -8,6 +8,7 @@ import {
     ModalCloseButton,
     useDisclosure
 } from '@chakra-ui/react'
+import { v4 } from 'uuid';
 import { useState, useRef } from "react";
 import Search from '../../public/search.svg';
 import Customize from '../../public/customize.svg';
@@ -124,7 +125,7 @@ export default function Home() {
                     {
                         Object.keys(weights).map(
                             i => 
-                            <Flex direction='row' w='100%'>
+                            <Flex direction='row' w='100%' key={v4()}>
                                 <Text>
                                     {i.charAt(0).toUpperCase() + i.slice(1)}
                                 </Text>
@@ -190,8 +191,9 @@ export default function Home() {
                                 i =>
                                 <Text
                                     style={{
-                                        "white-space": "nowrap",
+                                        whiteSpace: "nowrap",
                                     }}
+                                    key={v4()}
                                     bg='white'
                                     p='5px'
                                     borderRadius='20px'
@@ -225,7 +227,7 @@ export default function Home() {
                     p='2px'
                     onClick={onOpenInfo}
                 >
-                    <Image src={Info} alt='info-icon' borderRadius={'100%'}/>
+                    <Image src={Info} alt='info-icon' style={{borderRadius:'100%'}}/>
                 </Button>
                 <Button 
                     maxW='container.md' 

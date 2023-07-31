@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Map, {Marker} from 'react-map-gl';
+import { v4 } from 'uuid';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import GreenMarker from '../../public/green_marker.svg'; 
 import YellowMarker from '../../public/yellow_marker.svg'; 
@@ -26,7 +27,7 @@ export default function MapAndMarkers({user, markers}) {
             {
                 markers.map(
                     i => 
-                    <Marker longitude={i.longitude} latitude={i.latitude}>
+                    <Marker longitude={i.longitude} latitude={i.latitude} key={v4()}>
                         {
                             i.status === 'suitable' ?
                             <Image src={GreenMarker} alt='green'/>

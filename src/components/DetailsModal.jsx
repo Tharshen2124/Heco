@@ -17,6 +17,7 @@ import {
     Tag,
   } from "@chakra-ui/react"
 import Image from 'next/image';
+import { v4 } from 'uuid';
 import hospitalPic from '../../public/hospital_cyberjaya.png';
 import TagFacesIcon from "@mui/icons-material/TagFaces";
 import { Review } from "./Review";
@@ -73,7 +74,7 @@ export default function DetailsModal(){
                       spaceBetween={10}
                     >
                       {tags.map((i) => (
-                        <SwiperSlide style={{ width: "auto" }}>
+                        <SwiperSlide style={{ width: "auto" }} key={v4()}>
                           <Button
                             bg="gray.100"
                             px="10px"

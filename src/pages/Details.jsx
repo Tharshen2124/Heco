@@ -20,6 +20,7 @@ import TagFacesIcon from "@mui/icons-material/TagFaces";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
+import { v4 } from 'uuid';
 import { Review } from '@/components/Review';
 import Link from "next/link";
 
@@ -64,12 +65,12 @@ export default function Details() {
           >
             {assets.map((i) => {
               return (
-                <SwiperSlide>
+                <SwiperSlide key={v4()}>
                   <Image
                     src={i}
                     width={300}
                     height={220}
-                    borderRadius="20px"
+                    style={{borderRadius:"20px"}}
                     alt=""
                   />
                 </SwiperSlide>
@@ -178,7 +179,7 @@ export default function Details() {
             spaceBetween={10}
           >
             {tags.map((i) => (
-              <SwiperSlide style={{ width: "auto" }} key={i}>
+              <SwiperSlide style={{ width: "auto" }} key={v4()}>
                 <Button
                   bg="gray.100"
                   px="10px"
