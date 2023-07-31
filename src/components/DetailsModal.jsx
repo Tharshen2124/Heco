@@ -179,39 +179,36 @@ export default function DetailsModal() {
                       </Center>
                     </Button>
                   </Link>
-                  <Button
-                    maxW="container.md"
-                    w="43%"
-                    borderColor="#000AFF"
-                    borderWidth="3px"
-                    bg="white"
-                    position="absolute"
-                    bottom="15px"
-                    right="20px"
-                    css={{
-                      "&:hover": {
-                        backgroundColor: "#020ad4",
-                        "& .chakra-text": {
-                          color: "white"
-                        }
-                      },
-                      "&:active": {
-                        backgroundColor: "#020ad4",
-                        "& .chakra-text": {
-                          color: "white"
-                        }
-                      },
-                    }}
-                  >
-                    <Center>
-                      <Text
-                        color="#000AFF"
-                      >
-                        
-                        Create Review
-                      </Text>
-                    </Center>
-                  </Button>
+                  <Link href="/review">
+                    <Button
+                      maxW="container.md"
+                      w="43%"
+                      borderColor="#000AFF"
+                      borderWidth="3px"
+                      bg="white"
+                      position="absolute"
+                      bottom="15px"
+                      right="20px"
+                      css={{
+                        "&:hover": {
+                          backgroundColor: "#020ad4",
+                          "& .chakra-text": {
+                            color: "white",
+                          },
+                        },
+                        "&:active": {
+                          backgroundColor: "#020ad4",
+                          "& .chakra-text": {
+                            color: "white",
+                          },
+                        },
+                      }}
+                    >
+                      <Center>
+                        <Text color="#000AFF">Create Review</Text>
+                      </Center>
+                    </Button>
+                  </Link>
                 </HStack>
               </Flex>
             </Flex>
