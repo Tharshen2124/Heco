@@ -8,6 +8,7 @@ import {
   HStack,
   Image as ChakraImage,
   Center,
+  Input,
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -41,8 +42,6 @@ export default function Home() {
   const user = {
     image:
       "https://lh3.googleusercontent.com/ogw/AGvuzYa4OMQLnolXOBOumOzowan6axmJHyDwyn-gNUND=s32-c-mo",
-    longitude: 101.6146214,
-    latitude: 3.064785,
   };
   const tags = [
     "General",
@@ -108,9 +107,9 @@ export default function Home() {
   ];
 
   const {
-    isOpen: isOpenWeight,
-    onOpen: onOpenWeight,
-    onClose: onCloseWeight,
+    isOpen: isOpenConfig,
+    onOpen: onOpenConfig,
+    onClose: onCloseConfig,
   } = useDisclosure();
   const {
     isOpen: isOpenInfo,
@@ -122,15 +121,24 @@ export default function Home() {
     onOpen: onOpenDetails,
     onClose: onCloseDetails,
   } = useDisclosure();
-  const [weights, setWeights] = useState({
+  const [weight, setWeight] = useState({
     distance: 3,
     cost: 2,
     sentiment: 1,
   });
+  const [coordinate, setCoordinate] = useState({
+    longitude: 101.61722,
+    latitude: 3.064785,
+  });
   const updateWeight = (key, value) => {
-    const temp = { ...weights };
+    const temp = { ...weight };
     temp[key] = value;
-    setWeights({ ...temp });
+    setWeight({ ...temp });
+  };
+  const updateCoordinate = (key, value) => {
+    const temp = { ...coordinate };
+    temp[key] = value;
+    setCoordinate({ ...temp });
   };
 
   return (
@@ -146,26 +154,56 @@ export default function Home() {
         <DetailsModal />
       </Drawer>
       <Modal
-        isOpen={isOpenWeight}
-        onClose={onCloseWeight}
+        isOpen={isOpenConfig}
+        onClose={onCloseConfig}
         isCentered
         size={"sm"}
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Priority</ModalHeader>
+          <ModalHeader>Configuration</ModalHeader>
           <ModalCloseButton />
           <ModalBody p="20px">
-            {Object.keys(weights).map((i) => (
-              <Flex direction="row" w="100%" key={v4()}>
-                <Text>{i.charAt(0).toUpperCase() + i.slice(1)}</Text>
+            <Heading size={"sm"} p="10px 0px">
+              Coordinate
+            </Heading>
+            <VStack gap="5px">
+              <Flex direction="row" w="100%">
+                <Text>Longitude</Text>
                 <Spacer />
-                <NumberStepper
-                  value={weights[i]}
-                  update={(value) => updateWeight(i, value)}
+                <Input
+                  value={coordinate.longitude}
+                  w="100px"
+                  onChange={(e) =>
+                    updateCoordinate("longitude", e.target.value)
+                  }
                 />
               </Flex>
-            ))}
+              <Flex direction="row" w="100%">
+                <Text>Latitude</Text>
+                <Spacer />
+                <Input
+                  value={coordinate.latitude}
+                  w="100px"
+                  onChange={(e) => updateCoordinate("latitude", e.target.value)}
+                />
+              </Flex>
+            </VStack>
+            <Heading size={"sm"} p="10px 0px">
+              Priority
+            </Heading>
+            <VStack gap="5px">
+              {Object.keys(weight).map((i) => (
+                <Flex direction="row" w="100%" key={v4()}>
+                  <Text>{i.charAt(0).toUpperCase() + i.slice(1)}</Text>
+                  <Spacer />
+                  <NumberStepper
+                    value={weight[i]}
+                    update={(value) => updateWeight(i, value)}
+                  />
+                </Flex>
+              ))}
+            </VStack>
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -237,7 +275,7 @@ export default function Home() {
           </Flex>
         </VStack>
 
-        <MapAndMarkers user={user} markers={markers} />
+        <MapAndMarkers user={user} user_coord={coordinate} markers={markers} />
 
         <VStack p="20px 20px" w="100%" gap="15px" position={"relative"}>
           <Button
@@ -266,7 +304,7 @@ export default function Home() {
             maxW="container.md"
             w="100%"
             bg="#848484"
-            onClick={onOpenWeight}
+            onClick={onOpenConfig}
             css={{
               "&:hover": {
                 backgroundColor: "#6b6b6b",
@@ -279,7 +317,7 @@ export default function Home() {
             <Center>
               <HStack w="100%">
                 <Image src={Customize} alt="customize-icon" />
-                <Text color="white">Customize Priority</Text>
+                <Text color="white">Configuration</Text>
               </HStack>
             </Center>
           </Button>

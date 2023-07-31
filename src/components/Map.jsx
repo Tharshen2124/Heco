@@ -5,21 +5,31 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import GreenMarker from "../../public/green_marker.svg";
 import YellowMarker from "../../public/yellow_marker.svg";
 import RedMarker from "../../public/red_marker.svg";
+import { useEffect, useRef } from "react";
 
-export default function MapAndMarkers({ user, markers }) {
+export default function MapAndMarkers({ user, user_coord, markers }) {
+  const map = useRef();
+  useEffect(() => {
+    map.current?.flyTo({
+      center: [user_coord.longitude, user_coord.latitude],
+      duration: 1000,
+    });
+  }, [user_coord]);
+
   return (
     <Map
+      ref={map}
       mapLib={import("mapbox-gl")}
       initialViewState={{
-        longitude: user.longitude,
-        latitude: user.latitude,
+        longitude: user_coord.longitude,
+        latitude: user_coord.latitude,
         zoom: 15,
       }}
       mapboxAccessToken={process.env.NEXT_PUBLIC_MAP_BOX_ACCESS_TOKEN}
       style={{ width: "100%", height: "100%" }}
       mapStyle="mapbox://styles/mapbox/streets-v9"
     >
-      <Marker longitude={user.longitude} latitude={user.latitude}>
+      <Marker longitude={user_coord.longitude} latitude={user_coord.latitude}>
         <img
           src={user.image}
           alt="user-avatar"
