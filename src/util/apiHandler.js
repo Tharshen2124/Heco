@@ -16,7 +16,6 @@ export const apiHandler = (() => {
     */
     const uploadReview = async (facility_id, review, user) => {
         try {
-            console.log(review)
             const client = new TextAnalyticsClient(process.env.NEXT_PUBLIC_COG_SERVICE_ENDPOINT, new AzureKeyCredential(process.env.NEXT_PUBLIC_COG_SERVICE_KEY));
 
             const documents = [
