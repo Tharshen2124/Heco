@@ -32,49 +32,51 @@ export default function Profile() {
   }, [user]);
 
   return (
-    <>
-      {/* Profile with the name and email section */}
-      <Box>
-        <Center pt="4">
-          <Image
-            src={user ? user.photoURL : defaultImage}
-            style={{ borderRadius: "100%" }}
-            alt=""
-            w={20}
-          />
-        </Center>
-        <Center pt="2">
-          <Heading as="h1" size="lg">
-            {user ? user.displayName : "User"}
-          </Heading>
-        </Center>
-      </Box>
+    <Center>
+      <Box maxW={'container.sm'} w={'100%'}>
+        {/* Profile with the name and email section */}
+        <Box>
+          <Center pt="4">
+            <Image
+              src={user ? user.photoURL : defaultImage}
+              style={{ borderRadius: "100%" }}
+              alt=""
+              w={20}
+            />
+          </Center>
+          <Center pt="2">
+            <Heading as="h1" size="lg">
+              {user ? user.displayName : "User"}
+            </Heading>
+          </Center>
+        </Box>
 
-      {/* reviews and logout button section */}
-      <Box as="section" mt="10" px="6" mb="10">
-        <VStack mt={3} px={-5} gap={5}>
-          <Heading size="md" as="h5">
-            My last reviews
-          </Heading>
-          {data.map((d) => {
-            return (
-              <Review
-                key={v4()}
-                review={d}
-              />
-            );
-          })}
-          <Button
-            bg="blue"
-            color="white"
-            w={["50%", "20%"]}
-            _hover={{ bg: "gray.200", color: "blue" }}
-            onClick={handleLogout}
-          >
-            Logout
-          </Button>
-        </VStack>
+        {/* reviews and logout button section */}
+        <Box as="section" mt="10" px="6" mb="10">
+          <VStack mt={3} px={-5} gap={5}>
+            <Heading size="md" as="h5">
+              My last reviews
+            </Heading>
+            {data.map((d) => {
+              return (
+                <Review
+                  key={v4()}
+                  review={d}
+                />
+              );
+            })}
+            <Button
+              bg="blue"
+              color="white"
+              w={["50%", "20%"]}
+              _hover={{ bg: "gray.200", color: "blue" }}
+              onClick={handleLogout}
+            >
+              Logout
+            </Button>
+          </VStack>
+        </Box>
       </Box>
-    </>
+    </Center>
   );
 }

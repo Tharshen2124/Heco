@@ -1,6 +1,7 @@
 import { db } from "../../firebaseConfig";
 import { TextAnalyticsClient, AzureKeyCredential } from "@azure/ai-text-analytics";
 import { collection, addDoc, doc, getDoc, setDoc, query, where, getDocs } from "firebase/firestore";
+import { ref, getDownloadURL } from "firebase/storage";
 
 export const apiHandler = (() => {
     /*
@@ -103,11 +104,20 @@ export const apiHandler = (() => {
         return result.data();
     }
 
+    const getFacilityImage = async (facility_id) => {
+        const facility = await getDoc(doc(db, 'facilities', facility_id));
+        if (facility.data() === undefined || facility.data().image === undefined) return null;
+
+        const result = await getDownloadURL(ref(storage, `${facility.data().images[0]}`));
+        return result;
+    }
+
     return {
         uploadReview,
         getReviewOfUser,
         getReviewOfFacility,
         getFacilities,
-        getFacility
+        getFacility,
+        getFacilityImage
     }
 })();

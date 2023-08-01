@@ -33,14 +33,20 @@ import { useRouter } from "next/router";
 export default function DetailsModal({ facility, facilities }) {
   const router = useRouter();
   const [data, setData] = useState({})
+  const [review, setReview] = useState([])
+
   useEffect(() => {
+    const loadReview = async () => {
+      const review = await apiHandler.getReviewOfFacility(facility);
+      setReview(review);
+    };
+
     facilities.map((fac) => {
       if (fac.id === facility) {
         setData(fac)
-        console.log(data)
-        console.log(data.tags)
       }
     })
+    loadReview();
   }, [data, facilities, facility])
 
   const changePage = () => {
@@ -172,8 +178,10 @@ export default function DetailsModal({ facility, facilities }) {
                 </HStack>
                 <Divider bg="gray.800" borderWidth="1px" />
                 <VStack mt={3} px={-5} gap={5}>
-                  <Review />
-                  <Review />
+                  {review.map((review, i) => {
+                    if (i < 3) return <Review review={review}/>
+                    console.log(review)
+                  })}
                 </VStack>
                 <HStack width="100%" gap="5px">
                   <Link href="/details/[facility_id]" as={`/details/${data.id}`}>
