@@ -37,10 +37,25 @@ export const apiHandler = (() => {
                 doc(db, 'facilities', facility_id),
                 data
             );
+
+            const userSnapshot = await getDoc(doc(db, 'users', user.id));
+
+            const userReviews = userSnapshot.data().reviews === undefined ? [] : userSnapshot.data().reviews; 
+
+            userReviews.push(reviewRef.id);
+
+            await setDoc(
+                doc(db, 'users',user.id),
+                {
+                    reviews : userReviews
+                }
+            );
         } catch (err) {
             console.log(err);
         }
     }
+
+    uploadReview('5ljZcg2fxA5yeb2ditJV', {content: 'good shit', cost_rating: 3}, {id: '1', name: 'hi', image: 'hi'});
 
     return {
         uploadReview
