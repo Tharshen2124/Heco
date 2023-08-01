@@ -211,19 +211,38 @@ export default function Home({ data }) {
                 <Text>We are your healthcare facility recommender.</Text>
               </VStack>
               <Spacer />
-              <ChakraImage
-                src={user ? user.photoURL : defaultImage}
-                alt="user-avatar"
-                w="40px"
-                h="40px"
-                style={{ borderRadius: "100%" }}
-                onClick={() => router.push("/profile")}
-                transition="all 0.2s"
+              {
+                
+                user ?
+                <ChakraImage
+                    src={user ? user.photoURL : defaultImage}
+                    alt="user-avatar"
+                    w="40px"
+                    h="40px"
+                    style={{ borderRadius: "100%" }}
+                    onClick={() => router.push("/profile")}
+                    transition="all 0.2s"
+                    _hover={{
+                    cursor: "pointer",
+                    border: "3px solid blue",
+                    }}
+                />
+                :
+                <Button 
+                backgroundColor={'blue'}
+                color={'white'}
                 _hover={{
-                  cursor: "pointer",
-                  border: "3px solid blue",
+                    cursor: 'pointer',
+                    backgroundColor: "#020ad4"
                 }}
-              />
+                _active={{
+                    backgroundColor: "#020ad4",
+                }}
+                onClick={() => router.push('/login')}
+                >
+                    Login
+                </Button>
+              }
             </Flex>
             <SearchBar facilities={facilities} setFacility={viewFacility}/>
           </VStack>
