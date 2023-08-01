@@ -138,7 +138,7 @@ export default function Home({ data }) {
         onClose={onCloseDetails}
         placement="bottom"
       >
-        <DetailsModal />
+        <DetailsModal facility={facility} facilities={facilities}/>
       </Drawer>
       <Modal
         isOpen={isOpenConfig}

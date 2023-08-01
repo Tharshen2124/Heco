@@ -26,8 +26,27 @@ import { FreeMode } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
+import { apiHandler } from "@/util/apiHandler";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
-export default function DetailsModal() {
+export default function DetailsModal({ facility, facilities }) {
+  const router = useRouter();
+  const [data, setData] = useState({})
+  useEffect(() => {
+    facilities.map((fac) => {
+      if (fac.id === facility) {
+        setData(fac)
+        console.log(data)
+        console.log(data.tags)
+      }
+    })
+  }, [data, facilities, facility])
+
+  const changePage = () => {
+    router.push(`/review/${data.id}`)
+  }
+
   const tags = [
     "General",
     "Physiotherapy",
@@ -45,7 +64,7 @@ export default function DetailsModal() {
         <DrawerContent height="92vh" borderRadius="10px">
           <VStack>
             <DrawerCloseButton position="absolute" left="10px" top="15px" />
-            <DrawerHeader>Hospital Putrajaya</DrawerHeader>
+            <DrawerHeader>{data.name}</DrawerHeader>
           </VStack>
           <DrawerBody>
             <Flex
@@ -157,7 +176,7 @@ export default function DetailsModal() {
                   <Review />
                 </VStack>
                 <HStack width="100%" gap="5px">
-                  <Link href="/details">
+                  <Link href="/details/[facility_id]" as={`/details/${data.id}`}>
                     <Button
                       maxW="container.md"
                       w="43%"
@@ -179,7 +198,7 @@ export default function DetailsModal() {
                       </Center>
                     </Button>
                   </Link>
-                  <Link href="/review">
+                  <Link href="/review/[facility_id]" as={`/review/${data.id}`}>
                     <Button
                       maxW="container.md"
                       w="43%"
