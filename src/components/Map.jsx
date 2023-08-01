@@ -10,6 +10,7 @@ import { Box } from "@chakra-ui/react";
 
 export default function MapAndMarkers({ user, user_coord, facilities, setFacility }) {
   const map = useRef();
+  const defaultImage = "https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png";
   useEffect(() => {
     map.current?.flyTo({
       center: [user_coord.longitude, user_coord.latitude],
@@ -32,7 +33,7 @@ export default function MapAndMarkers({ user, user_coord, facilities, setFacilit
     >
       <Marker longitude={user_coord.longitude} latitude={user_coord.latitude}>
         <img
-          src={user.image}
+          src={user ? user.photoURL : defaultImage}
           alt="user-avatar"
           width="30px"
           style={{ borderRadius: "100%" }}

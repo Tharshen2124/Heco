@@ -21,7 +21,7 @@ import router from "next/router";
 
 export default function Login() {
   const googleAuth = new GoogleAuthProvider();
-  const [user, setuser] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(auth);
   const googleLogin = async () => {
     try {
       await signInWithPopup(auth, googleAuth);
@@ -32,10 +32,7 @@ export default function Login() {
 
   useEffect(() => {
     if (user) {
-      router.push({
-        pathname: "/",
-        query: { image: user.photoURL },
-      });
+      router.push('/')
     }
   }, [user]);
 

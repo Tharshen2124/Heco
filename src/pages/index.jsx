@@ -37,13 +37,13 @@ import { v4 } from "uuid";
 import { useRouter } from "next/router";
 import DetailsModal from "@/components/DetailsModal";
 import { apiHandler } from "@/util/apiHandler";
+import { auth } from "../../firebaseConfig";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function Home({ data }) {
   const router = useRouter();
-  const [user, setUser] = useState({
-    image: "https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png",
-  });
-  const { image } = router.query;
+  const defaultImage = "https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png";
+  const [user, loading, error] = useAuthState(auth);
   const [tags, setTags] = useState({});
   const [facility, setFacility] = useState('');
   const [facilities, setFacilities] = useState(data);
@@ -130,7 +130,7 @@ export default function Home({ data }) {
       }
     }
     setTags({ ...temp });
-  }, []);
+  }, []);    
 
   return (
     <>
@@ -216,7 +216,7 @@ export default function Home({ data }) {
               </VStack>
               <Spacer />
               <ChakraImage
-                src={image ? image : user.image}
+                src={user ? user.photoURL : defaultImage}
                 alt="user-avatar"
                 w="40px"
                 h="40px"
