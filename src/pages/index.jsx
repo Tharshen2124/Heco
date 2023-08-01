@@ -93,7 +93,7 @@ export default function Home({ data }) {
   };
 
   const locate = () => {
-    setFacility('3CHcxBajESAwzejYIDZp')
+    viewFacility('3CHcxBajESAwzejYIDZp');
   }
 
   const viewFacility = (facility_id) => {
