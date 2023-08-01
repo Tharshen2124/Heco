@@ -1,11 +1,14 @@
 import { Review } from "@/components/Review";
-import { Box, Button, Center, Heading, Image, Spinner, VStack } from "@chakra-ui/react";
+import { Box, Button, Center, Heading, VStack } from "@chakra-ui/react";
+import { Image as ChakraImage } from "@chakra-ui/react";
 import { apiHandler } from "@/util/apiHandler";
 import { auth } from "../../firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { v4 } from "uuid";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Back from "../../public/back.svg";
+import Image from "next/image";
 
 export default function Profile() {
   const router = useRouter();
@@ -40,58 +43,76 @@ export default function Profile() {
   }, [user]);
 
   return (
-    <Center>
-      <Box maxW={"container.sm"} w={"100%"}>
-        {/* Profile with the name and email section */}
-        <Box>
-          <Center pt="4">
-            <Image
-              src={user ? user.photoURL : defaultImage}
-              style={{ borderRadius: "100%" }}
-              alt=""
-              w={20}
-            />
-          </Center>
-          <Center pt="2">
-            <Heading as="h1" size="lg">
-              {user ? user.displayName : "User"}
-            </Heading>
-          </Center>
-        </Box>
-
-        {/* reviews and logout button section */}
-        <Box as="section" mt="10" px="6" mb="10">
-          <VStack mt={3} px={-5} gap={5}>
-            <Heading size="md" as="h5">
-              My last reviews
-            </Heading>
-            {user ? (
-              data.map((d) => {
-                return <Review key={v4()} review={d} />;
-              })
-            ) : (
-              <Button
-                bg="blue"
-                color="white"
-                w="250px"
-                _hover={{ bg: "gray.200", color: "blue" }}
-                onClick={login}
-              >
-                Login to see your reviews
-              </Button>
-            )}
-            {user ? (<Button
-              bg="blue"
-              color="white"
-              w={["50%", "20%"]}
-              _hover={{ bg: "gray.200", color: "blue" }}
-              onClick={handleLogout}
-            >
-              Logout
-            </Button>) : null }
-          </VStack>
-        </Box>
+    <>
+      <Box
+        m={[5, 8]}
+        _hover={{
+          cursor: "pointer",
+        }}
+      >
+        <Image
+          src={Back}
+          alt="back"
+          width="30px"
+          height="30px"
+          onClick={() => router.push("/")}
+        />
       </Box>
-    </Center>
+      <Center mt={-10}>
+        <Box maxW={"container.sm"} w={"100%"}>
+          {/* Profile with the name and email section */}
+          <Box>
+            <Center>
+              <ChakraImage
+                src={user ? user.photoURL : defaultImage}
+                style={{ borderRadius: "100%" }}
+                alt=""
+                w={20}
+              />
+            </Center>
+            <Center pt="2">
+              <Heading as="h1" size="lg">
+                {user ? user.displayName : "User"}
+              </Heading>
+            </Center>
+          </Box>
+
+          {/* reviews and logout button section */}
+          <Box as="section" mt="10" px="6" mb="10">
+            <VStack mt={3} px={-5} gap={5}>
+              <Heading size="md" as="h5">
+                My last reviews
+              </Heading>
+              {user ? (
+                data.map((d) => {
+                  return <Review key={v4()} review={d} />;
+                })
+              ) : (
+                <Button
+                  bg="blue"
+                  color="white"
+                  w="250px"
+                  _hover={{ bg: "gray.200", color: "blue" }}
+                  onClick={login}
+                >
+                  Login to see your reviews
+                </Button>
+              )}
+              {user ? (
+                <Button
+                  bg="blue"
+                  color="white"
+                  w={["50%", "20%"]}
+                  _hover={{ bg: "gray.200", color: "blue" }}
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
+              ) : null}
+            </VStack>
+          </Box>
+        </Box>
+      </Center>
+    </>
   );
 }

@@ -3,7 +3,6 @@ import {
   Container,
   Heading,
   Text,
-  Image,
   Box,
   HStack,
   Progress,
@@ -23,12 +22,14 @@ import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { v4 } from 'uuid';
 import { Review } from '@/components/Review';
-import Link from "next/link";
 import { useRouter } from 'next/router';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebaseConfig";
 import { apiHandler } from "@/util/apiHandler";
 import { useEffect } from 'react';
+import Back from "../../../public/back.svg";
+import Image from "next/image";
+import { Image as ChakraImage } from '@chakra-ui/react';
 
 export default function Details({ facility, review }) {
     const router = useRouter();
@@ -66,9 +67,19 @@ export default function Details({ facility, review }) {
 
     return (
       <Container px={[5, 0]} py={5} maxW={["100vw", "90vw"]} w={["100vw"]}>
-        <Link href="/">
-          <ArrowBackIcon boxSize={5} />
-        </Link>
+        <Box
+          _hover={{
+            cursor: "pointer",
+          }}
+        >
+          <Image
+            src={Back}
+            alt="back"
+            width="30px"
+            height="30px"
+            onClick={() => router.push("/")}
+          />
+        </Box>
         <Flex direction="column" alignItems="center">
           <Heading size="md" pt={5}>
             {facility.name}
@@ -86,7 +97,7 @@ export default function Details({ facility, review }) {
               {assets.map((i) => {
                 return (
                   <SwiperSlide style={{ width: "auto" }} key={v4()}>
-                    <Image
+                    <ChakraImage
                       src={i}
                       width={300}
                       height={220}
@@ -181,7 +192,7 @@ export default function Details({ facility, review }) {
 
               <HStack w="100%" justifyContent="space-between">
                 <Text mt={2} fontSize="md" fontWeight="semibold" color="black">
-                  Cost Rating: 
+                  Cost Rating:
                 </Text>
                 <Progress
                   colorScheme="red"
@@ -248,7 +259,7 @@ export default function Details({ facility, review }) {
             <Divider mt={2} bg="gray.800" borderWidth="1px" />
             <VStack mt={3} px={-5} gap={5}>
               {review.map((i) => {
-                return <Review review={i}/>
+                return <Review review={i} key={v4()}/>;
               })}
             </VStack>
           </Flex>
