@@ -69,7 +69,7 @@ export const apiHandler = (() => {
     const getReviewOfUser = async (user_id) => {
         const userSnapshot = await getDoc(doc(db, 'users', user_id));
 
-        if (userSnapshot.data().reviews === undefined) return [];
+        if (userSnapshot.data() === undefined || userSnapshot.data().reviews === undefined) return [];
 
         
         const q = query(collection(db, 'reviews'), where("__name__", 'in', userSnapshot.data().reviews));
@@ -80,12 +80,20 @@ export const apiHandler = (() => {
     }
 
     const getReviewOfFacility = async (facility_id) => {
-        const facilitySnapshot = await getDoc(doc(db, 'facilities', facility_id_id));
+        const facilitySnapshot = await getDoc(doc(db, 'facilities', facility_id));
 
-        if (facilitySnapshot.data().reviews === undefined) return [];
+        if (facilitySnapshot.data() === undefined || facilitySnapshot.data().reviews === undefined) return [];
 
         const q = query(collection(db, 'reviews'), where("__name__", 'in', facilitySnapshot.data().reviews));
         const result = await getDocs(q);
+        const ret = [];
+        result.forEach(i => ret.push(i.data()));
+        console.log(ret);
+        return ret;
+    }
+
+    const getFacilities = async () => {
+        const result = await getDocs(collection(db, 'facilities'));
         const ret = [];
         result.forEach(i => ret.push(i.data()));
         return ret;
@@ -94,6 +102,7 @@ export const apiHandler = (() => {
     return {
         uploadReview,
         getReviewOfUser,
-        getReviewOfFacility
+        getReviewOfFacility,
+        getFacilities
     }
 })();
