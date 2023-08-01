@@ -13,8 +13,8 @@ import {
 import Back from '../../public/back.svg';
 import LoginIllus from "../../public/login.svg";
 import Image from "next/image";
-import { auth, provider } from "../../firebaseConfig";
-import { signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
+import { auth } from "../../firebaseConfig";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect } from "react";
 import router from "next/router";
@@ -29,14 +29,6 @@ export default function Login() {
       console.log(err);
     }
   };
-
-  const facebookLogin = async () => {
-    try {
-      await signInWithPopup(auth, provider);
-    } catch (err) {
-      console.log(err);
-    }
-  }
 
   useEffect(() => {
     if (user) {
@@ -99,33 +91,6 @@ export default function Login() {
                       height={4}
                     />
                     <Text>Continue with Google</Text>
-                  </HStack>
-                </Center>
-              </Button>
-              <Button
-                maxW="container.md"
-                w="100%"
-                bg="gray.100"
-                css={{
-                  "&:hover": {
-                    backgroundColor: "#020ad4",
-                    color: "#ffffff",
-                  },
-                  "&:active": {
-                    backgroundColor: "#020ad4",
-                    color: "#ffffff",
-                  },
-                }}
-              >
-                <Center>
-                  <HStack w="100%" onClick={facebookLogin}>
-                    <ChakraImage
-                      src="./facebook.png"
-                      alt="facebook-icon"
-                      width={4}
-                      height={4}
-                    />
-                    <Text>Continue with Facebook</Text>
                   </HStack>
                 </Center>
               </Button>

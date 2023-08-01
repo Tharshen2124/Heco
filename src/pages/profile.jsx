@@ -1,23 +1,35 @@
-import BlueButton from "@/components/BlueButton";
 import { Review } from "@/components/Review";
-import { Box, Center, Heading, Image, VStack, useToast } from "@chakra-ui/react";
+import { Box, Button, Center, Heading, Image, VStack } from "@chakra-ui/react";
 import { apiHandler } from "@/util/apiHandler";
 import { auth } from "../../firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { v4 } from "uuid";
+import { useEffect, useState } from "react";
 
-export async function getData() 
-{
-  const data = await apiHandler.getReviewOfUser("1");
-  return data
-}
-
-const data = await getData()
-
-export default function Profile() 
-{  
+export default function Profile() {
   const [user, loading, error] = useAuthState(auth);
+  const [data, setData] = useState([]);
   const defaultImage =
     "https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png";
+
+  const handleLogout = async () => {
+    try {
+      await auth.signOut();
+      toast({ title: "Logout successfully", status: "success" });
+      router.push("/");
+    } catch (error) {
+      console.error("Error while logging out:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      (async () => {
+        const res = await apiHandler.getReviewOfUser(user.uid);
+        setData(res);
+      })();
+    }
+  }, [user]);
 
   return (
     <>
@@ -33,13 +45,13 @@ export default function Profile()
         </Center>
         <Center pt="2">
           <Heading as="h1" size="lg">
-            {data[0].author_name}
+            {user ? user.displayName : "User"}
           </Heading>
         </Center>
       </Box>
 
       {/* reviews and logout button section */}
-      <Box as="section" mt="10" px="6">
+      <Box as="section" mt="10" px="6" mb="10">
         <VStack mt={3} px={-5} gap={5}>
           <Heading size="md" as="h5">
             My last reviews
@@ -47,7 +59,7 @@ export default function Profile()
           {data.map((d) => {
             return (
               <Review
-                key={d.author_id}
+                key={v4()}
                 name={d.author_name}
                 review={d.review}
                 timestamp={d.timestamp}
@@ -56,12 +68,15 @@ export default function Profile()
               />
             );
           })}
-          <BlueButton
-            text="Logout"
-            size="100%"
-            maxW="container.md"
-            mt="10"
-          />
+          <Button
+            bg="blue"
+            color="white"
+            w={["50%", "20%"]}
+            _hover={{ bg: "gray.200", color: "blue" }}
+            onClick={handleLogout}
+          >
+            Logout
+          </Button>
         </VStack>
       </Box>
     </>
