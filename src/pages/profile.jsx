@@ -1,8 +1,27 @@
 import BlueButton from "@/components/BlueButton";
 import { Review } from "@/components/Review";
-import { Box, Center, Heading, Image, VStack, Text } from "@chakra-ui/react";
+import { Box, Center, Heading, Image, VStack, Text, useToast } from "@chakra-ui/react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebaseConfig";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+
 
 export default function Profile() {
+  const router = useRouter();
+  const [user] = useAuthState(auth);
+  const toast = useToast();
+
+  const handleLogout = async () => {
+    try {
+      await auth.signOut();
+      toast({ title: "Logout successfully", status: "success" });
+      router.push("/login");
+    } catch (error) {
+      console.error("Error while logging out:", error);
+    }
+  };
+
   return (
     <>
       {/* Profile with the name and email section */}
@@ -31,7 +50,13 @@ export default function Profile() {
           <Review />
           <Review />
           <Review />
-          <BlueButton text="Logout" size="100%" maxW="740px" mt="10" />
+          <BlueButton
+            text="Logout"
+            size="100%"
+            maxW="740px"
+            mt="10"
+            onClick={handleLogout}
+          />
         </VStack>
       </Box>
     </>
