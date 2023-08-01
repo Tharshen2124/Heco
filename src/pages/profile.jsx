@@ -1,12 +1,14 @@
 import { Review } from "@/components/Review";
-import { Box, Button, Center, Heading, Image, VStack } from "@chakra-ui/react";
+import { Box, Button, Center, Heading, Image, Spinner, VStack } from "@chakra-ui/react";
 import { apiHandler } from "@/util/apiHandler";
 import { auth } from "../../firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { v4 } from "uuid";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 export default function Profile() {
+  const router = useRouter();
   const [user, loading, error] = useAuthState(auth);
   const [data, setData] = useState([]);
   const defaultImage =
@@ -22,18 +24,24 @@ export default function Profile() {
     }
   };
 
+  const login = () => {
+    router.push("/login");
+  }
+
   useEffect(() => {
     if (user) {
       (async () => {
         const res = await apiHandler.getReviewOfUser(user.uid);
         setData(res);
       })();
+    } else {
+      setData([]);
     }
   }, [user]);
 
   return (
     <Center>
-      <Box maxW={'container.sm'} w={'100%'}>
+      <Box maxW={"container.sm"} w={"100%"}>
         {/* Profile with the name and email section */}
         <Box>
           <Center pt="4">
@@ -57,15 +65,22 @@ export default function Profile() {
             <Heading size="md" as="h5">
               My last reviews
             </Heading>
-            {data.map((d) => {
-              return (
-                <Review
-                  key={v4()}
-                  review={d}
-                />
-              );
-            })}
-            <Button
+            {user ? (
+              data.map((d) => {
+                return <Review key={v4()} review={d} />;
+              })
+            ) : (
+              <Button
+                bg="blue"
+                color="white"
+                w="250px"
+                _hover={{ bg: "gray.200", color: "blue" }}
+                onClick={login}
+              >
+                Login to see your reviews
+              </Button>
+            )}
+            {user ? (<Button
               bg="blue"
               color="white"
               w={["50%", "20%"]}
@@ -73,7 +88,7 @@ export default function Profile() {
               onClick={handleLogout}
             >
               Logout
-            </Button>
+            </Button>) : null }
           </VStack>
         </Box>
       </Box>
