@@ -1,8 +1,19 @@
 import { db } from "../../firebaseConfig";
 import { TextAnalyticsClient, AzureKeyCredential } from "@azure/ai-text-analytics";
-import { collection, addDoc, doc, getDoc, setDoc } from "firebase/firestore";
+import { collection, addDoc, doc, getDoc, setDoc, query, where, getDocs } from "firebase/firestore";
 
 export const apiHandler = (() => {
+    /*
+        review : {
+            content,
+            cost_rating
+        }
+        user: {
+            name,
+            id,
+            image
+        }
+    */
     const uploadReview = async (facility_id, review, user) => {
         try {
             const client = new TextAnalyticsClient(process.env.NEXT_PUBLIC_COG_SERVICE_ENDPOINT, new AzureKeyCredential(process.env.NEXT_PUBLIC_COG_SERVICE_KEY));
@@ -55,9 +66,34 @@ export const apiHandler = (() => {
         }
     }
 
-    uploadReview('5ljZcg2fxA5yeb2ditJV', {content: 'good shit', cost_rating: 3}, {id: '1', name: 'hi', image: 'hi'});
+    const getReviewOfUser = async (user_id) => {
+        const userSnapshot = await getDoc(doc(db, 'users', user_id));
+
+        if (userSnapshot.data().reviews === undefined) return [];
+
+        
+        const q = query(collection(db, 'reviews'), where("__name__", 'in', userSnapshot.data().reviews));
+        const result = await getDocs(q);
+        const ret = [];
+        result.forEach(i => ret.push(i.data()));
+        return ret;
+    }
+
+    const getReviewOfFacility = async (facility_id) => {
+        const facilitySnapshot = await getDoc(doc(db, 'facilities', facility_id_id));
+
+        if (facilitySnapshot.data().reviews === undefined) return [];
+
+        const q = query(collection(db, 'reviews'), where("__name__", 'in', facilitySnapshot.data().reviews));
+        const result = await getDocs(q);
+        const ret = [];
+        result.forEach(i => ret.push(i.data()));
+        return ret;
+    }
 
     return {
-        uploadReview
+        uploadReview,
+        getReviewOfUser,
+        getReviewOfFacility
     }
 })();
