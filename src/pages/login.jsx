@@ -38,31 +38,28 @@ export default function Login() {
 
   return (
     <>
-      <Box position={"absolute"} top="10px" left="15px">
-        <Image src={Back} alt="back-icon" />
-      </Box>
       <Center>
         <Grid
           templateColumns={{ base: "1fr", md: "1fr 1fr" }} // For mobile (base) use 1 column, for desktop (md) use 2 columns
           justifyContent={"center"}
           alignItems={"center"}
-          gap="5"
+          gap={{ sm: 5, md: 200 }}
           w="100%"
           h="100vh"
-          maxW="container.md"
+          maxW="container.xl"
           p="20px"
         >
           <Flex direction="column" alignItems={{ base: "start", md: "center" }}>
             <Flex direction="column" gap="15px">
-              <Heading size={"xl"}>Welcome Back,</Heading>
-              <Text fontWeight="semibold" color="gray.600">
+              <Heading size="2xl">Welcome Back,</Heading>
+              <Text fontSize="lg" fontWeight="semibold" color="gray.600">
                 Great to see you again
               </Text>
             </Flex>
           </Flex>
           <VStack gap="30px">
             <Center>
-              <Image src={LoginIllus} alt="login svg" w={100} />
+              <Image src={LoginIllus} alt="login svg" width={400} height={400} />
             </Center>
             <VStack gap={3} w="100%">
               <Button
