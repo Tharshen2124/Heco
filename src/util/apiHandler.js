@@ -82,7 +82,7 @@ export const apiHandler = (() => {
     const getReviewOfFacility = async (facility_id) => {
         const facilitySnapshot = await getDoc(doc(db, 'facilities', facility_id));
 
-        if (facilitySnapshot.data() === undefined || facilitySnapshot.data().reviews === undefined) return [];
+        if (facilitySnapshot.data() === undefined || facilitySnapshot.data().reviews === undefined || facilitySnapshot.data().reviews.length === 0) return [];
 
         const q = query(collection(db, 'reviews'), where("__name__", 'in', facilitySnapshot.data().reviews));
         const result = await getDocs(q);

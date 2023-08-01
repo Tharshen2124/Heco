@@ -30,7 +30,7 @@ import { auth } from "../../../firebaseConfig";
 import { apiHandler } from "@/util/apiHandler";
 import { useEffect } from 'react';
 
-export default function Details({ facility }) {
+export default function Details({ facility, review }) {
     const router = useRouter();
     const facility_id = router.query.facility_id;
     const [user, loading, error] = useAuthState(auth);
@@ -247,10 +247,9 @@ export default function Details({ facility }) {
             </HStack>
             <Divider mt={2} bg="gray.800" borderWidth="1px" />
             <VStack mt={3} px={-5} gap={5}>
-              <Review />
-              <Review />
-              <Review />
-              <Review />
+              {review.map((i) => {
+                return <Review review={i}/>
+              })}
             </VStack>
           </Flex>
         </Flex>
@@ -261,9 +260,11 @@ export default function Details({ facility }) {
 export async function getServerSideProps(context){
     const { params } = context;
     const facility = await apiHandler.getFacility(params.facility_id);
+    const review = await apiHandler.getReviewOfFacility(params.facility_id);
     return{
         props: {
-            facility
+            facility,
+            review
         }
     }
 }
