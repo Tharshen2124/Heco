@@ -96,14 +96,10 @@ export default function Home({ data }) {
     setFacility('3CHcxBajESAwzejYIDZp')
   }
 
-  // Trigger drawer when facility is changed
-  // then change it back to an empty string, to allow reopening of the same facility
-  useEffect(() => {
-    if (facility !== ''){
-        onOpenDetails();
-        setFacility('');
-    }
-  }, [facility])
+  const viewFacility = (facility_id) => {
+    setFacility(facility_id);
+    onOpenDetails();
+  }
 
   useEffect(() => {
     const temp = [];
@@ -229,7 +225,7 @@ export default function Home({ data }) {
                 }}
               />
             </Flex>
-            <SearchBar facilities={facilities} setFacility={setFacility}/>
+            <SearchBar facilities={facilities} setFacility={viewFacility}/>
           </VStack>
 
           <Flex
@@ -279,7 +275,7 @@ export default function Home({ data }) {
           user={user}
           user_coord={coordinate}
           facilities={facilities}
-          setFacility={setFacility}
+          setFacility={viewFacility}
         />
 
         <VStack p="20px 20px" w="100%" gap="15px" position={"relative"}>
