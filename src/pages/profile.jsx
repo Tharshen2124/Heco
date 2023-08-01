@@ -1,27 +1,19 @@
 import BlueButton from "@/components/BlueButton";
 import { Review } from "@/components/Review";
-import { Box, Center, Heading, Image, VStack, Text, useToast } from "@chakra-ui/react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../firebaseConfig";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
+import { Box, Center, Heading, Image, VStack } from "@chakra-ui/react";
+import { apiHandler } from "@/util/apiHandler";
+
+export async function getData() 
+{
+  const data = await apiHandler.getReviewOfUser("1");
+  return data
+}
 
 
-export default function Profile() {
-  const router = useRouter();
-  const [user] = useAuthState(auth);
-  const toast = useToast();
+const data = await getData()
 
-  const handleLogout = async () => {
-    try {
-      await auth.signOut();
-      toast({ title: "Logout successfully", status: "success" });
-      router.push("/login");
-    } catch (error) {
-      console.error("Error while logging out:", error);
-    }
-  };
-
+export default function Profile() 
+{  
   return (
     <>
       {/* Profile with the name and email section */}
@@ -31,32 +23,30 @@ export default function Profile() {
         </Center>
         <Center pt="2">
           <Heading as="h1" size="lg">
-            John Doe
+            {data[0].author_name}
           </Heading>
-        </Center>
-        <Center>
-          <Text fontSize={14} fontWeight={"semibold"} as="h4" color="gray.400">
-            johndoe@gmail.com
-          </Text>
         </Center>
       </Box>
 
       {/* reviews and logout button section */}
       <Box as="section" mt="10" px="6">
-        <VStack mt={3} px={-5} gap={5}>
+        <VStack mt={3} px={-5} gap={5} >
           <Heading size="md" as="h5">
             My last reviews
           </Heading>
-          <Review />
-          <Review />
-          <Review />
-          <BlueButton
-            text="Logout"
-            size="100%"
-            maxW="740px"
-            mt="10"
-            onClick={handleLogout}
-          />
+          {data.map(d => {
+            return (
+              <Review 
+                key={d.author_id} 
+                name={d.author_name}  
+                review={d.review} 
+                timestamp={d.timestamp} 
+                image={d.image}
+                maxW="container.md"
+              />
+            )
+          })}
+          <BlueButton text="Logout" size="100%" maxW="container.md" mt="10" />
         </VStack>
       </Box>
     </>

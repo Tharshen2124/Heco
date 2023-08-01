@@ -1,30 +1,22 @@
-import { Avatar, HStack, VStack, Text, Box } from "@chakra-ui/react";
-
-export const Review = () => {
+import { Avatar, HStack, VStack, Text, Box, Spacer } from "@chakra-ui/react";
+import {timeAgo} from "@/util/timeAgo"
+export const Review = ({name, review, timestamp, image, maxW=null}) => {
+  
   return (
-    <Box bg="gray.100" borderRadius="10px" boxShadow="xl">
-      <HStack px="4" py="4" gap="3">
-        <Avatar alignSelf="flex-start" boxSize="1.7em" />
-        <VStack gap={2}>
-          <HStack justifyContent="space-between" w="100%">
-            <Text fontSize="sm" fontWeight="bold" alignItems={"left"}>
-              John Doe
-            </Text>
-            <Text
-              fontSize="13px"
-              fontWeight="semibold"
-              color="gray.500"
-              alignItems={"right"}
-            >
-              One hour ago
-            </Text>
-          </HStack>
-          <Text fontSize="13px">
-            I think the hospital is lit and really good. siodfdosdfjodsjf od
-            nfosf osdfo sd sdof ds iofodjfo lsdfl jod osdf iosdjf osjd
+    <Box bg="gray.100" borderRadius="10px" boxShadow="xl" py="5" px="5" w="100%" maxW={maxW}> 
+        <HStack>
+          <Avatar alignSelf="flex-start" boxSize="1.7em" />
+          <Text fontSize="md" fontWeight="bold" alignItems={"left"}>
+            {name}
           </Text>
-        </VStack>
-      </HStack>
+          <Spacer />
+          <Text fontSize="13px" fontWeight="semibold"color="gray.500">
+            {timeAgo(timestamp)}
+          </Text>
+        </HStack>
+        <Text fontSize="14px" pl="10">
+          {review}
+        </Text>
     </Box>
   );
 };
