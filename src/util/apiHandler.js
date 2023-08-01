@@ -20,7 +20,8 @@ export const apiHandler = (() => {
             const facilitySnapshot = await getDoc(doc(db, "facilities", facility_id));
 
             const reviewRef = await addDoc(collection(db, "reviews"), {
-                author: user.id,
+                author_id: user.id,
+                author_name: user.name,
                 image: user.image,
                 review: review.content,
                 timestamp: Date.now()
