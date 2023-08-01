@@ -38,7 +38,7 @@ import { useRouter } from "next/router";
 import DetailsModal from "@/components/DetailsModal";
 import { apiHandler } from "@/util/apiHandler";
 
-export default function Home({data}) {
+export default function Home({ data }) {
   const router = useRouter();
   const [user, setUser] = useState({
     image:
@@ -86,36 +86,32 @@ export default function Home({data}) {
     setCoordinate({ ...temp });
   };
 
-  useEffect(
-    () => {
-        const temp = [];
-        for(const i of data){
-            let ok = true;
-            for(const j of Object.keys(tags)){
-                if (tags[j] === false) continue;
-                let found = false;
-                for(const k of i.tags){
-                    if (k === j) found = true;
-                }
-                ok &= found;
-            }
-            if (ok) temp.push({...i});
+  useEffect(() => {
+    const temp = [];
+    for (const i of data) {
+      let ok = true;
+      for (const j of Object.keys(tags)) {
+        if (tags[j] === false) continue;
+        let found = false;
+        for (const k of i.tags) {
+          if (k === j) found = true;
         }
-        setFacilities([...temp]);
+        ok &= found;
+      }
+      if (ok) temp.push({ ...i });
     }
-  ,[tags])
+    setFacilities([...temp]);
+  }, [tags]);
 
-  useEffect(
-    () => {
-        const temp = {};
-        for(const i of facilities){
-            for(const j of i.tags){
-                temp[j] = false;
-            }
-        }
-        setTags({...temp});
+  useEffect(() => {
+    const temp = {};
+    for (const i of facilities) {
+      for (const j of i.tags) {
+        temp[j] = false;
+      }
     }
-  ,[])
+    setTags({ ...temp });
+  }, []);
 
   return (
     <>
@@ -206,11 +202,11 @@ export default function Home({data}) {
                 w="40px"
                 h="40px"
                 style={{ borderRadius: "100%" }}
-                onClick={() => router.push('/profile')}
+                onClick={() => router.push("/profile")}
                 transition="all 0.2s"
                 _hover={{
-                    cursor: "pointer",
-                    border: "3px solid blue"
+                  cursor: "pointer",
+                  border: "3px solid blue",
                 }}
               />
             </Flex>
@@ -220,7 +216,7 @@ export default function Home({data}) {
           <Flex
             direction="row"
             position="absolute"
-            bottom={["-50px", "-60px"]}
+            bottom={'-50px'}
             w="100vw"
             gap={2}
           >
@@ -247,8 +243,8 @@ export default function Home({data}) {
                         backgroundColor: "blue",
                         color: "white",
                       }}
-                      marginLeft={index === 0 ? '10px': 0}
-                      marginRight={index === tags.length-1 ? '10px': 0}
+                      marginLeft={index === 0 ? "10px" : 0}
+                      marginRight={index === tags.length - 1 ? "10px" : 0}
                       onClick={() => toggleTags(i)}
                     >
                       {i}
@@ -260,7 +256,11 @@ export default function Home({data}) {
           </Flex>
         </VStack>
 
-        <MapAndMarkers user={user} user_coord={coordinate} facilities={facilities} />
+        <MapAndMarkers
+          user={user}
+          user_coord={coordinate}
+          facilities={facilities}
+        />
 
         <VStack p="20px 20px" w="100%" gap="15px" position={"relative"}>
           <Button
@@ -333,12 +333,11 @@ export default function Home({data}) {
   );
 }
 
-
-export async function getServerSideProps(){
-    const facilities = await apiHandler.getFacilities();
-    return{
-        props:  {
-            data: facilities
-        }
-    }
+export async function getServerSideProps() {
+  const facilities = await apiHandler.getFacilities();
+  return {
+    props: {
+      data: facilities,
+    },
+  };
 }
