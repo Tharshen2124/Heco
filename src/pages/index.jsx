@@ -19,7 +19,7 @@ import {
   Tag,
   Drawer,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchBar from "@/components/SearchBar";
 import Customize from "../../public/customize.svg";
 import Locate from "../../public/locate.svg";
@@ -36,66 +36,16 @@ import "swiper/css/pagination";
 import { v4 } from "uuid";
 import { useRouter } from "next/router";
 import DetailsModal from "@/components/DetailsModal";
+import { apiHandler } from "@/util/apiHandler";
 
-export default function Home() {
+export default function Home({data}) {
   const router = useRouter();
   const [user, setUser] = useState({
     image:
       "https://lh3.googleusercontent.com/ogw/AGvuzYa4OMQLnolXOBOumOzowan6axmJHyDwyn-gNUND=s32-c-mo",
   });
-  const [tags, setTags] = useState({
-    General: true,
-    Physiotherapy: false,
-    Paramedic: true,
-    "Internal Medicine": false,
-    Pediatrics: false,
-    "Obstetrics and Gynecology (OB/GYN)": false,
-    Surgery: false,
-    Psychiatry: true,
-    Surgery: false,
-    Psychiatry: false,
-  });
-  const [markers, setMarkers] = useState([
-    {
-      longitude: 101.617,
-      latitude: 3.064785,
-      status: "suitable",
-    },
-    {
-      longitude: 101.62,
-      latitude: 3.06,
-      status: "less_suitable",
-    },
-    {
-      longitude: 101.61462,
-      latitude: 3.07,
-      status: "mod_suitable",
-    },
-  ]);
-
-  const [facilities, setFacilities] = useState([
-    { title: "Hope General Hospital" },
-    { title: "Mercy Medical Center" },
-    { title: "Saint Luke's Hospital" },
-    { title: "Grace Memorial Hospital" },
-    { title: "Unity Health Center" },
-    { title: "Royal Oak Medical Center" },
-    { title: "Sunset Valley Hospital" },
-    { title: "Maplewood Community Hospital" },
-    { title: "Riverdale Regional Medical Center" },
-    { title: "Oakridge General Hospital" },
-    { title: "Lakeview Health Services" },
-    { title: "Greenfield Medical Clinic" },
-    { title: "Pinecrest Hospital" },
-    { title: "Briarwood Healthcare Center" },
-    { title: "Meadowbrook General Hospital" },
-    { title: "Cedar Grove Medical Center" },
-    { title: "Sunnydale Surgical Hospital" },
-    { title: "Hillside Children's Hospital" },
-    { title: "Springfield Women's Clinic" },
-    { title: "Westside Cardiac Care" },
-  ]);
-
+  const [tags, setTags] = useState({});
+  const [facilities, setFacilities] = useState(data);
   const {
     isOpen: isOpenConfig,
     onOpen: onOpenConfig,
@@ -135,6 +85,37 @@ export default function Home() {
     temp[key] = value;
     setCoordinate({ ...temp });
   };
+
+  useEffect(
+    () => {
+        const temp = [];
+        for(const i of data){
+            let ok = true;
+            for(const j of Object.keys(tags)){
+                if (tags[j] === false) continue;
+                let found = false;
+                for(const k of i.tags){
+                    if (k === j) found = true;
+                }
+                ok &= found;
+            }
+            if (ok) temp.push({...i});
+        }
+        setFacilities([...temp]);
+    }
+  ,[tags])
+
+  useEffect(
+    () => {
+        const temp = {};
+        for(const i of facilities){
+            for(const j of i.tags){
+                temp[j] = false;
+            }
+        }
+        setTags({...temp});
+    }
+  ,[])
 
   return (
     <>
@@ -279,7 +260,7 @@ export default function Home() {
           </Flex>
         </VStack>
 
-        <MapAndMarkers user={user} user_coord={coordinate} markers={markers} />
+        <MapAndMarkers user={user} user_coord={coordinate} facilities={facilities} />
 
         <VStack p="20px 20px" w="100%" gap="15px" position={"relative"}>
           <Button
@@ -350,4 +331,14 @@ export default function Home() {
       </Flex>
     </>
   );
+}
+
+
+export async function getServerSideProps(){
+    const facilities = await apiHandler.getFacilities();
+    return{
+        props:  {
+            data: facilities
+        }
+    }
 }

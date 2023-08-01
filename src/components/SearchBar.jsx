@@ -16,7 +16,7 @@ export default function SearchBar({ facilities }) {
   const [searchResult, setSearchResult] = useState([]);
   const [input, setInput] = useState("");
   const fuseOptions = {
-    keys: ["title"],
+    keys: ["name"],
   };
   const fuse = new Fuse(facilities, fuseOptions);
 
@@ -67,7 +67,7 @@ export default function SearchBar({ facilities }) {
                 p="5px 10px"
                 borderRadius={"5px"}
               >
-                {i.item.title}
+                {i.item.name}
               </Box>
             ))}
           </VStack>

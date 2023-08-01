@@ -88,7 +88,6 @@ export const apiHandler = (() => {
         const result = await getDocs(q);
         const ret = [];
         result.forEach(i => ret.push(i.data()));
-        console.log(ret);
         return ret;
     }
 

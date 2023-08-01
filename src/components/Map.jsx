@@ -7,7 +7,7 @@ import YellowMarker from "../../public/yellow_marker.svg";
 import RedMarker from "../../public/red_marker.svg";
 import { useEffect, useRef } from "react";
 
-export default function MapAndMarkers({ user, user_coord, markers }) {
+export default function MapAndMarkers({ user, user_coord, facilities }) {
   const map = useRef();
   useEffect(() => {
     map.current?.flyTo({
@@ -37,7 +37,7 @@ export default function MapAndMarkers({ user, user_coord, markers }) {
           style={{ borderRadius: "100%" }}
         />
       </Marker>
-      {markers.map((i) => (
+      {facilities.map((i) => (
         <Marker longitude={i.longitude} latitude={i.latitude} key={v4()}>
           {i.status === "suitable" ? (
             <Image src={GreenMarker} alt="green" />
