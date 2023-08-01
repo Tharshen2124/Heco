@@ -13,8 +13,8 @@ import {
 import Back from '../../public/back.svg';
 import LoginIllus from "../../public/login.svg";
 import Image from "next/image";
-import { auth } from "../../firebaseConfig";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { auth, provider } from "../../firebaseConfig";
+import { signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect } from "react";
 import router from "next/router";
@@ -29,6 +29,14 @@ export default function Login() {
       console.log(err);
     }
   };
+
+  const facebookLogin = async () => {
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   useEffect(() => {
     if (user) {
@@ -59,7 +67,12 @@ export default function Login() {
           </Flex>
           <VStack gap="30px">
             <Center>
-              <Image src={LoginIllus} alt="login svg" width={400} height={400} />
+              <Image
+                src={LoginIllus}
+                alt="login svg"
+                width={400}
+                height={400}
+              />
             </Center>
             <VStack gap={3} w="100%">
               <Button
@@ -105,7 +118,7 @@ export default function Login() {
                 }}
               >
                 <Center>
-                  <HStack w="100%">
+                  <HStack w="100%" onClick={facebookLogin}>
                     <ChakraImage
                       src="./facebook.png"
                       alt="facebook-icon"
