@@ -16,6 +16,7 @@ export const apiHandler = (() => {
     */
     const uploadReview = async (facility_id, review, user) => {
         try {
+            console.log(review)
             const client = new TextAnalyticsClient(process.env.NEXT_PUBLIC_COG_SERVICE_ENDPOINT, new AzureKeyCredential(process.env.NEXT_PUBLIC_COG_SERVICE_KEY));
 
             const documents = [
@@ -51,7 +52,7 @@ export const apiHandler = (() => {
 
             const userSnapshot = await getDoc(doc(db, 'users', user.id));
 
-            const userReviews = userSnapshot.data().reviews === undefined ? [] : userSnapshot.data().reviews; 
+            const userReviews = userSnapshot.data() === undefined || userSnapshot.data().reviews === undefined ? [] : userSnapshot.data().reviews; 
 
             userReviews.push(reviewRef.id);
 
