@@ -94,7 +94,7 @@ export const apiHandler = (() => {
     const getFacilities = async () => {
         const result = await getDocs(collection(db, 'facilities'));
         const ret = [];
-        result.forEach(i => ret.push(i.data()));
+        result.forEach(i => ret.push({...i.data(), id: i.id}));
         return ret;
     }
 

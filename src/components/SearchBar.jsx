@@ -12,7 +12,7 @@ import Search from "../../public/search.svg";
 import Fuse from "fuse.js";
 import { useEffect, useState } from "react";
 
-export default function SearchBar({ facilities }) {
+export default function SearchBar({ facilities, setFacility }) {
   const [searchResult, setSearchResult] = useState([]);
   const [input, setInput] = useState("");
   const fuseOptions = {
@@ -66,6 +66,7 @@ export default function SearchBar({ facilities }) {
                 }}
                 p="5px 10px"
                 borderRadius={"5px"}
+                onClick={() => setFacility(i.id)}
               >
                 {i.item.name}
               </Box>

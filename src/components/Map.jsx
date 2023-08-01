@@ -6,8 +6,9 @@ import GreenMarker from "../../public/green_marker.svg";
 import YellowMarker from "../../public/yellow_marker.svg";
 import RedMarker from "../../public/red_marker.svg";
 import { useEffect, useRef } from "react";
+import { Box } from "@chakra-ui/react";
 
-export default function MapAndMarkers({ user, user_coord, facilities }) {
+export default function MapAndMarkers({ user, user_coord, facilities, setFacility }) {
   const map = useRef();
   useEffect(() => {
     map.current?.flyTo({
@@ -38,14 +39,16 @@ export default function MapAndMarkers({ user, user_coord, facilities }) {
         />
       </Marker>
       {facilities.map((i) => (
-        <Marker longitude={i.longitude} latitude={i.latitude} key={v4()}>
-          {i.status === "suitable" ? (
-            <Image src={GreenMarker} alt="green" />
-          ) : i.status === "mod_suitable" ? (
-            <Image src={YellowMarker} alt="yellow" />
-          ) : (
-            <Image src={RedMarker} alt="red" />
-          )}
+        <Marker longitude={i.longitude} latitude={i.latitude} key={v4()} onClick={() => setFacility(i.id)}>
+          <Box _hover={{cursor : 'pointer'}}>
+              {i.status === "suitable" ? (
+                <Image src={GreenMarker} alt="green" />
+              ) : i.status === "mod_suitable" ? (
+                <Image src={YellowMarker} alt="yellow" />
+              ) : (
+                <Image src={RedMarker} alt="red" />
+              )}
+          </Box>
         </Marker>
       ))}
     </Map>

@@ -45,6 +45,7 @@ export default function Home({ data }) {
       "https://lh3.googleusercontent.com/ogw/AGvuzYa4OMQLnolXOBOumOzowan6axmJHyDwyn-gNUND=s32-c-mo",
   });
   const [tags, setTags] = useState({});
+  const [facility, setFacility] = useState('');
   const [facilities, setFacilities] = useState(data);
   const {
     isOpen: isOpenConfig,
@@ -61,30 +62,48 @@ export default function Home({ data }) {
     onOpen: onOpenDetails,
     onClose: onCloseDetails,
   } = useDisclosure();
+
   const [weight, setWeight] = useState({
     distance: 3,
     cost: 2,
     sentiment: 1,
   });
+
   const [coordinate, setCoordinate] = useState({
     longitude: 101.61722,
     latitude: 3.064785,
   });
+
   const toggleTags = (key) => {
     const temp = { ...tags };
     temp[key] = !temp[key];
     setTags({ ...temp });
   };
+
   const updateWeight = (key, value) => {
     const temp = { ...weight };
     temp[key] = value;
     setWeight({ ...temp });
   };
+
   const updateCoordinate = (key, value) => {
     const temp = { ...coordinate };
     temp[key] = value;
     setCoordinate({ ...temp });
   };
+
+  const locate = () => {
+    setFacility('3CHcxBajESAwzejYIDZp')
+  }
+
+  // Trigger drawer when facility is changed
+  // then change it back to an empty string, to allow reopening of the same facility
+  useEffect(() => {
+    if (facility !== ''){
+        onOpenDetails();
+        setFacility('');
+    }
+  }, [facility])
 
   useEffect(() => {
     const temp = [];
@@ -210,7 +229,7 @@ export default function Home({ data }) {
                 }}
               />
             </Flex>
-            <SearchBar facilities={facilities} />
+            <SearchBar facilities={facilities} setFacility={setFacility}/>
           </VStack>
 
           <Flex
@@ -260,6 +279,7 @@ export default function Home({ data }) {
           user={user}
           user_coord={coordinate}
           facilities={facilities}
+          setFacility={setFacility}
         />
 
         <VStack p="20px 20px" w="100%" gap="15px" position={"relative"}>
@@ -310,7 +330,7 @@ export default function Home({ data }) {
             maxW="container.md"
             w="100%"
             bg="#000AFF"
-            onClick={onOpenDetails}
+            onClick={locate}
             css={{
               "&:hover": {
                 backgroundColor: "#020ad4",
