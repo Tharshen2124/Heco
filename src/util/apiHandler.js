@@ -99,10 +99,16 @@ export const apiHandler = (() => {
         return ret;
     }
 
+    const getFacility = async (facility_id) => {
+        const result = await getDoc(doc(db, 'facilities', facility_id));
+        return result.data();
+    }
+
     return {
         uploadReview,
         getReviewOfUser,
         getReviewOfFacility,
-        getFacilities
+        getFacilities,
+        getFacility
     }
 })();
