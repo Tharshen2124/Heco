@@ -239,11 +239,11 @@ export default function Home() {
           <Flex
             direction="row"
             position="absolute"
-            bottom={["-50px", "-60px", "-70px"]}
+            bottom={["-50px", "-60px"]}
             w="100vw"
             gap={2}
           >
-            <HStack overflowX="scroll">
+            <HStack w="100%">
               <Swiper
                 slidesPerView="auto"
                 freeMode={true}

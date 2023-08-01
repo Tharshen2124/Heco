@@ -75,7 +75,7 @@ export default function Review() {
             mt={5}
             textAlign="left"
           >
-            1. On a scale of 1 to 5, how would you rate the overall cost of
+            1. On a scale of 1 to 5, with 1 being the lowest cost and 5 being the highest cost, how would you rate the overall cost of
             Hospital Cyberjaya?
           </Text>
 
