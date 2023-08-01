@@ -40,7 +40,7 @@ export default function Login() {
                 >
                     <Center>
                     <HStack w="100%">
-                        <Image src="./google.png" alt="locate-icon" width={4} height={4}/>
+                        <Image src="./google.png" alt="google-icon" width={4} height={4}/>
                         <Text>Continue with Google</Text>
                     </HStack>
                     </Center>
@@ -62,7 +62,7 @@ export default function Login() {
                 >
                     <Center>
                     <HStack w="100%">
-                        <Image src="./facebook.png" alt="google-icon" width={4} height={4}/>
+                        <Image src="./facebook.png" alt="facebook-icon" width={4} height={4}/>
                         <Text>Continue with Facebook</Text>
                     </HStack>
                     </Center>
