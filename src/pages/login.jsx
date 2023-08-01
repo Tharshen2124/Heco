@@ -37,19 +37,17 @@ export default function Login() {
   }, [user]);
 
   return (
-    <>
+    <Box m={[5, 10]}>
+      <Image
+        src={Back}
+        alt="back"
+        width="30px"
+        height="30px"
+        onClick={() => router.push("/")}
+      />
       <Center>
-        <Grid
-          templateColumns={{ base: "1fr", md: "1fr 1fr" }} // For mobile (base) use 1 column, for desktop (md) use 2 columns
-          justifyContent={"center"}
-          alignItems={"center"}
-          gap={{ sm: 5, md: 200 }}
-          w="100%"
-          h="100vh"
-          maxW="container.xl"
-          p="20px"
-        >
-          <Flex direction="column" alignItems={{ base: "start", md: "center" }}>
+        <VStack gap={10}>
+          <Flex direction="column" mt={[10, 0]}>
             <Flex direction="column" gap="15px">
               <Heading size="2xl">Welcome Back,</Heading>
               <Text fontSize="lg" fontWeight="semibold" color="gray.600">
@@ -70,16 +68,11 @@ export default function Login() {
               <Button
                 maxW="container.md"
                 w="100%"
-                bg="gray.100"
-                css={{
-                  "&:hover": {
-                    backgroundColor: "#020ad4",
-                    color: "#ffffff",
-                  },
-                  "&:active": {
-                    backgroundColor: "#020ad4",
-                    color: "#ffffff",
-                  },
+                bg="#020ad4"
+                color="white"
+                _hover={{
+                  bg: "gray.200",
+                  color: "#020ad4",
                 }}
               >
                 <Center>
@@ -96,8 +89,8 @@ export default function Login() {
               </Button>
             </VStack>
           </VStack>
-        </Grid>
+        </VStack>
       </Center>
-    </>
+    </Box>
   );
 }
