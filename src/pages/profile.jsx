@@ -60,11 +60,7 @@ export default function Profile() {
             return (
               <Review
                 key={v4()}
-                name={d.author_name}
-                review={d.review}
-                timestamp={d.timestamp}
-                image={d.image}
-                maxW="container.md"
+                review={d}
               />
             );
           })}
