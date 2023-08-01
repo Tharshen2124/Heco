@@ -2,6 +2,8 @@ import BlueButton from "@/components/BlueButton";
 import { Review } from "@/components/Review";
 import { Box, Center, Heading, Image, VStack, useToast } from "@chakra-ui/react";
 import { apiHandler } from "@/util/apiHandler";
+import { auth } from "../../firebaseConfig";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export async function getData() 
 {
@@ -13,6 +15,10 @@ const data = await getData()
 
 export default function Profile() 
 {  
+  const [user, loading, error] = useAuthState(auth);
+  const defaultImage =
+    "https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png";
+
   return (
     <>
       {/* Profile with the name and email section */}
@@ -55,7 +61,6 @@ export default function Profile()
             size="100%"
             maxW="container.md"
             mt="10"
-            onClick={handleLogout}
           />
         </VStack>
       </Box>
