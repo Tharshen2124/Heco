@@ -41,9 +41,9 @@ import { apiHandler } from "@/util/apiHandler";
 export default function Home({ data }) {
   const router = useRouter();
   const [user, setUser] = useState({
-    image:
-      "https://lh3.googleusercontent.com/ogw/AGvuzYa4OMQLnolXOBOumOzowan6axmJHyDwyn-gNUND=s32-c-mo",
+    image: "https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png",
   });
+  const { image } = router.query;
   const [tags, setTags] = useState({});
   const [facility, setFacility] = useState('');
   const [facilities, setFacilities] = useState(data);
@@ -216,7 +216,7 @@ export default function Home({ data }) {
               </VStack>
               <Spacer />
               <ChakraImage
-                src={user.image}
+                src={image ? image : user.image}
                 alt="user-avatar"
                 w="40px"
                 h="40px"
