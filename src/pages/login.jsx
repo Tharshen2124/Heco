@@ -1,75 +1,107 @@
-import { Button, Heading, Text, Box, Center, VStack, HStack, Image, Grid } from "@chakra-ui/react";
-import LoginIllus from "../../public/login.svg"
-import Imaged from "next/image";
+import {
+  Button,
+  Heading,
+  Text,
+  Flex,
+  Box,
+  Center,
+  VStack,
+  HStack,
+  Image as ChakraImage,
+  Grid,
+} from "@chakra-ui/react";
+import Back from '../../public/back.svg';
+import LoginIllus from "../../public/login.svg";
+import Image from "next/image";
 
 export default function Login() {
   return (
     <>
-    <Grid
-      templateColumns={{ base: "1fr", md: "1fr 1fr" }} // For mobile (base) use 1 column, for desktop (md) use 2 columns
-      gap="5"
-      mt="3"
-      mx="10"
-    >
-        <Box mt="10">
-            <Heading>Welcome Back</Heading>
-            <Text fontWeight="semibold" color="gray.600">Great to see you again</Text>  
-            <Text fontWeight="semibold" color="gray.600">Enter your email and password below</Text>
-        </Box>
-        
-        <Box>
-            <Center my="16">
-                <Imaged src={LoginIllus} alt="login svg" w={100}/>
-            </Center>
-
-            <VStack gap={3}>
+      <Box position={'absolute'} top='10px' left='15px'>
+          <Image src={Back} alt='back-icon'/>
+      </Box>
+      <Center>
+          <Grid
+            templateColumns={{ base: "1fr", md: "1fr 1fr" }} // For mobile (base) use 1 column, for desktop (md) use 2 columns
+            justifyContent={'center'}
+            alignItems={'center'}
+            gap="5"
+            w='100%'
+            h='100vh'
+            maxW='container.md'
+            p='20px'
+          >
+            <Flex direction='column' alignItems={{base: 'start', md: 'center'}}>
+                <Flex direction='column' gap='15px'>
+                  <Heading size={'xl'}>Welcome Back,</Heading>
+                  <Text fontWeight="semibold" color="gray.600">
+                    Great to see you again
+                  </Text>
+                </Flex>
+            </Flex>
+            <VStack gap='30px'>
+              <Center>
+                <Image src={LoginIllus} alt="login svg" w={100} />
+              </Center>
+              <VStack gap={3} w='100%'>
                 <Button
-                    maxW="container.md"
-                    w="100%"
-                    bg="gray.100"
-                    css={{
-                        "&:hover": {
-                            backgroundColor: "#020ad4",
-                            color: "#ffffff",
-                        },
-                        "&:active": {
-                            backgroundColor: "#020ad4",
-                            color:"#ffffff",
-                        },
-                    }}
+                  maxW="container.md"
+                  w="100%"
+                  bg="gray.100"
+                  css={{
+                    "&:hover": {
+                      backgroundColor: "#020ad4",
+                      color: "#ffffff",
+                    },
+                    "&:active": {
+                      backgroundColor: "#020ad4",
+                      color: "#ffffff",
+                    },
+                  }}
                 >
-                    <Center>
+                  <Center>
                     <HStack w="100%">
-                        <Image src="./google.png" alt="google-icon" width={4} height={4}/>
-                        <Text>Continue with Google</Text>
+                      <ChakraImage
+                        src="./google.png"
+                        alt="google-icon"
+                        width={4}
+                        height={4}
+                      />
+                      <Text>Continue with Google</Text>
                     </HStack>
-                    </Center>
+                  </Center>
                 </Button>
                 <Button
-                    maxW="container.md"
-                    w="100%"
-                    bg="gray.100"
-                    css={{
-                        "&:hover": {
-                            backgroundColor: "#020ad4",
-                            color: "#ffffff",
-                        },
-                        "&:active": {
-                            backgroundColor: "#020ad4",
-                            color:"#ffffff",
-                        },
-                    }}
+                  maxW="container.md"
+                  w="100%"
+                  bg="gray.100"
+                  css={{
+                    "&:hover": {
+                      backgroundColor: "#020ad4",
+                      color: "#ffffff",
+                    },
+                    "&:active": {
+                      backgroundColor: "#020ad4",
+                      color: "#ffffff",
+                    },
+                  }}
                 >
-                    <Center>
+                  <Center>
                     <HStack w="100%">
-                        <Image src="./facebook.png" alt="facebook-icon" width={4} height={4}/>
-                        <Text>Continue with Facebook</Text>
+                      <ChakraImage
+                        src="./facebook.png"
+                        alt="facebook-icon"
+                        width={4}
+                        height={4}
+                      />
+                      <Text>Continue with Facebook</Text>
                     </HStack>
-                    </Center>
-                </Button>    
+                  </Center>
+                </Button>
+              </VStack>
             </VStack>
-        </Box>
-    </Grid>
+          </Grid>
+      </Center>
     </>
-  )
+  );
 }
