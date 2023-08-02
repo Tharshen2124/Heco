@@ -33,7 +33,7 @@ import { useEffect } from 'react';
 import Back from "../../../public/back.svg";
 import Image from "next/image";
 
-export default function Details({ facility, review }) {
+export default function Details({ facility, review, images }) {
     const router = useRouter();
     const facility_id = router.query.facility_id;
     const [user, loading, error] = useAuthState(auth);
@@ -53,18 +53,6 @@ export default function Details({ facility, review }) {
       "Obstetrics and Gynecology (OB/GYN)",
       "Surgery",
       "Psychiatry",
-    ];
-
-    const assets = [
-      "https://www.utusan.com.my/wp-content/uploads/UTU_HOSPITAL9797-scaled.jpg",
-      "https://assets.bharian.com.my/images/articles/HOSPITAL_CYBERJAYA_spital_cyberjaya_1668155209.jpg",
-      "https://www.utusan.com.my/wp-content/uploads/UTU_HOSPITAL9797-scaled.jpg",
-      "https://assets.bharian.com.my/images/articles/HOSPITAL_CYBERJAYA_spital_cyberjaya_1668155209.jpg",
-      "https://assets.hmetro.com.my/images/articles/0724rsputj_1627109876.jpg",
-      "https://www.utusan.com.my/wp-content/uploads/UTU_HOSPITAL9797-scaled.jpg",
-      "https://assets.bharian.com.my/images/articles/HOSPITAL_CYBERJAYA_spital_cyberjaya_1668155209.jpg",
-      "https://assets.hmetro.com.my/images/articles/0724rsputj_1627109876.jpg",
-      "https://www.utusan.com.my/wp-content/uploads/UTU_HOSPITAL9797-scaled.jpg",
     ];
 
     return (
@@ -108,7 +96,7 @@ export default function Details({ facility, review }) {
                 modules={[FreeMode]}
                 spaceBetween={20}
               >
-                {assets.map((i) => {
+                {images.map((i) => {
                   return (
                     <SwiperSlide style={{ width: "auto" }} key={v4()}>
                       <ChakraImage
@@ -283,10 +271,12 @@ export async function getServerSideProps(context){
     const { params } = context;
     const facility = await apiHandler.getFacility(params.facility_id);
     const review = await apiHandler.getReviewOfFacility(params.facility_id);
+    const images = await apiHandler.getFacilityImage(params.facility_id);
     return{
         props: {
             facility,
-            review
+            review,
+            images
         }
     }
 }
