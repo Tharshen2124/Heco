@@ -15,10 +15,9 @@ import {
   Center,
   Tag,
   Spinner,
+  Image as ChakraImage,
 } from "@chakra-ui/react";
-import Image from "next/image";
 import { v4 } from "uuid";
-import hospitalPic from "../../public/hospital_cyberjaya.png";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
 import { Review } from "./Review";
 import Link from "next/link";
@@ -30,12 +29,14 @@ import "swiper/css/pagination";
 import { apiHandler } from "@/util/apiHandler";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { SearchIcon } from "@chakra-ui/icons";
 
 export default function DetailsModal({ facility, facilities }) {
   const router = useRouter();
   const [data, setData] = useState({})
   const [review, setReview] = useState([])
   const [images, setImages] = useState("")
+  const [tags, setTags] = useState({})
 
   useEffect(() => {
     const loadReview = async () => {
@@ -55,18 +56,19 @@ export default function DetailsModal({ facility, facilities }) {
 
   const changePage = () => {
     router.push(`/review/${data.id}`)
-  }
+  };
 
-  const tags = [
-    "General",
-    "Physiotherapy",
-    "Paramedic",
-    "Internal Medicine",
-    "Pediatrics",
-    "Obstetrics and Gynecology (OB/GYN)",
-    "Surgery",
-    "Psychiatry",
-  ];
+  useEffect(() => {
+    const temp = {};
+    for (const i of facilities) {
+      if( i.id == facility) {
+        for(const j of i.tags) {
+          temp[j] = true;
+        }
+      }
+    }
+    setTags({ ...temp });
+  }, []);    
 
     return (
       <>
@@ -77,6 +79,18 @@ export default function DetailsModal({ facility, facilities }) {
             <DrawerHeader>{data.name}</DrawerHeader>
           </VStack>
           <DrawerBody>
+            <Flex justifyContent="center" alignItems="center">
+              {images ? (
+                <ChakraImage
+                  src={images}
+                  alt="hospital-picture"
+                  width={250}
+                  height={175}
+                />
+              ) : (
+                <Spinner />
+              )}
+            </Flex>
             <Flex
               gap={{ base: "10px", lg: "30px" }}
               direction={{ base: "column", lg: "row" }}
@@ -91,18 +105,11 @@ export default function DetailsModal({ facility, facilities }) {
                 maxW="container.md"
                 w={{ base: "100%", lg: "50%" }}
               >
-                <Flex justifyContent="center" alignItems="center">
-                  {images ? (
-                    <img
-                      src={images}
-                      alt="hospital-picture"
-                      width={185}
-                      height={125}
-                    />
-                  ) : (
-                    <Spinner />
-                  )}
-                </Flex>
+                <HStack pt={3}>
+                  <Text fontWeight="bold">Specialisation </Text>
+                  <SearchIcon />
+                </HStack>
+                <Divider bg="gray.800" borderWidth="1px" />
                 <HStack overflowX="hidden" mt={2}>
                   <Swiper
                     slidesPerView="auto"
@@ -110,20 +117,25 @@ export default function DetailsModal({ facility, facilities }) {
                     modules={[FreeMode]}
                     spaceBetween={10}
                   >
-                    {tags.map((i) => (
+                    {Object.keys(tags).map((i, index) => (
                       <SwiperSlide style={{ width: "auto" }} key={v4()}>
                         <Tag
-                          bg="gray.200"
+                          bg={tags[i] ? "blue" : "white"}
+                          color={tags[i] ? "white" : "black"}
                           px="20px"
                           py="10px"
                           borderRadius="10px"
                           userSelect="none"
                           fontSize="md"
+                          transition={"all 0.2s"}
                           _hover={{
                             cursor: "pointer",
                             backgroundColor: "blue",
                             color: "white",
                           }}
+                          marginLeft={index === 0 ? "10px" : 0}
+                          marginRight={index === tags.length - 1 ? "10px" : 0}
+                          onClick={() => toggleTags(i)}
                         >
                           {i}
                         </Tag>
@@ -139,22 +151,7 @@ export default function DetailsModal({ facility, facilities }) {
                   px={5}
                   py={4}
                 >
-                  <Tag
-                    fontWeight="bold"
-                    px={8}
-                    py={2}
-                    fontSize="md"
-                    bg="red"
-                    color="white"
-                  >
-                    Busy
-                  </Tag>
-                  <Text
-                    mt={2}
-                    fontSize="md"
-                    fontWeight="semibold"
-                    color="black"
-                  >
+                  <Text fontSize="md" fontWeight="semibold" color="black">
                     Distance: 30km
                   </Text>
                   <HStack w="100%" justifyContent="space-between">
@@ -176,7 +173,12 @@ export default function DetailsModal({ facility, facilities }) {
                   </HStack>
                 </Box>
               </Flex>
-              <Flex direction="column" gap="10px" w="100%" maxW="container.md">
+              <Flex
+                direction="column"
+                gap="10px"
+                w={{ base: "100%", lg: "50%" }}
+                maxW="container.md"
+              >
                 <HStack justifyContent="space-between" w="100%" pt={3}>
                   <Text fontWeight="bold">Reviews</Text>
                   <HStack alignItems="center" color="#2DFF00" gap={1}>
@@ -187,55 +189,67 @@ export default function DetailsModal({ facility, facilities }) {
                 <Divider bg="gray.800" borderWidth="1px" />
                 <VStack mt={3} px={-5} gap={5}>
                   {review.map((review, i) => {
-                    if (i < 3) return <Review review={review}/>
-                    console.log(review)
+                    if (i < 3) return <Review review={review} />;
+                    console.log(review);
                   })}
                 </VStack>
+                <Center>
+                  <Text color="black" onClick={changePage} mt={5}>
+                    Click view details to view more reviews
+                  </Text>
+                </Center>
                 <HStack width="100%">
-                  <Link href="/details/[facility_id]" as={`/details/${data.id}`}>
-                    <Button
-                      maxW="container.md"
-                      w="43%"
-                      bg="#000AFF"
-                      position="absolute"
-                      bottom="15px"
-                      left="20px"
-                      css={{
-                        "&:hover": {
-                          backgroundColor: "#020ad4",
-                        },
-                        "&:active": {
-                          backgroundColor: "#020ad4",
-                        },
-                      }}
-                    >
-                      <Center>
-                        <Text color="white">View Details</Text>
-                      </Center>
-                    </Button>
+                  <Link
+                    href="/details/[facility_id]"
+                    as={`/details/${data.id}`}
+                  >
+                    <Center>
+                      <Button
+                        maxW="container.md"
+                        w="43%"
+                        bg="#000AFF"
+                        position="absolute"
+                        bottom="15px"
+                        left={["20px", "50px"]}
+                        css={{
+                          "&:hover": {
+                            backgroundColor: "#020ad4",
+                          },
+                          "&:active": {
+                            backgroundColor: "#020ad4",
+                          },
+                        }}
+                      >
+                        <Center>
+                          <Text color="white">View Details</Text>
+                        </Center>
+                      </Button>
+                    </Center>
                   </Link>
                   <Link href="/review/[facility_id]" as={`/review/${data.id}`}>
-                    <Button
-                      maxW="container.md"
-                      w="43%"
-                      borderColor="#000AFF"
-                      borderWidth="3px"
-                      bg="blue"
-                      position="absolute"
-                      bottom="15px"
-                      right="20px"
-                      color={'white'}
-                      _hover={{
-                        backgroundColor: "#020ad4",
-                      }}
-                      _active={{
-                        backgroundColor: "#020ad4",
-                      }}
-                    >
-                      <Center>
-                        <Text>Create Review</Text>
-                      </Center>
-                    </Button>
+                    <Center>
+                      <Button
+                        maxW="container.md"
+                        w="43%"
+                        borderColor="#000AFF"
+                        borderWidth="3px"
+                        bg="blue"
+                        position="absolute"
+                        bottom="15px"
+                        right={["20px", "30px"]}
+                        color={"white"}
+                        _hover={{
+                          backgroundColor: "#020ad4",
+                        }}
+                        _active={{
+                          backgroundColor: "#020ad4",
+                        }}
+                      >
+                        <Center>
+                          <Text>Create Review</Text>
+                        </Center>
+                      </Button>
+                    </Center>
                   </Link>
                 </HStack>
               </Flex>

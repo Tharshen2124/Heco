@@ -190,16 +190,6 @@ export default function Details({ facility, review }) {
                 px={5}
                 py={4}
               >
-                <Tag
-                  fontWeight="bold"
-                  px={8}
-                  py={2}
-                  fontSize="md"
-                  bg="red"
-                  color="white"
-                >
-                  Busy
-                </Tag>
                 <Text mt={2} fontSize="md" fontWeight="semibold" color="black">
                   Distance: 30km
                 </Text>
