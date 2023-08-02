@@ -41,7 +41,7 @@ export const apiHandler = (() => {
 
             const data = facilitySnapshot.data();
 
-            data.total_cost += review.cost_rating;
+            data.cost_rating[review.cost_rating - 1] += 1;
             data[sentiment] += 1;
             data.reviews.push(reviewRef.id);
 
