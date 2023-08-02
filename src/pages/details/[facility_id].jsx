@@ -49,12 +49,6 @@ export default function Details({ facility, review, images }) {
   }
 
   useEffect(() => {
-    if (!user && !loading) {
-      router.push("/login");
-    }
-  }, [user, loading, error, router]);
-
-  useEffect(() => {
     let temp = 0;
     for (let i = 0; i < 5; i++) {
       temp += facility.cost_rating[i] * (i + 1);
@@ -101,19 +95,16 @@ export default function Details({ facility, review, images }) {
         </Center>
       ) : (
         <Container px={[5, 0]} py={5} maxW={["100vw", "90vw"]} w={["100vw"]}>
-          <Box
-            _hover={{
+          <Image
+            src={Back}
+            alt="back"
+            width="30px"
+            height="30px"
+            style={{
               cursor: "pointer",
             }}
-          >
-            <Image
-              src={Back}
-              alt="back"
-              width="30px"
-              height="30px"
-              onClick={() => router.push("/")}
-            />
-          </Box>
+            onClick={() => router.push("/")}
+          />
           <Flex direction="column" alignItems="center">
             <Heading size="md" pt={5}>
               {facility.name}

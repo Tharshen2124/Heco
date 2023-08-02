@@ -83,19 +83,16 @@ export default function Review({facility, image}) {
           </Center>
         ) : (
           <Container px={5} py={5}>
-            <Box
-              _hover={{
+            <Image
+              src={Back}
+              alt="back"
+              width="30px"
+              height="30px"
+              style={{
                 cursor: "pointer",
               }}
-            >
-              <Image
-                src={Back}
-                alt="back"
-                width="30px"
-                height="30px"
-                onClick={() => router.push("/")}
-              />
-            </Box>
+              onClick={() => router.push("/")}
+            />
             <Heading size="md" textAlign={"center"}>
               Create a review
             </Heading>

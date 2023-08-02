@@ -51,17 +51,15 @@ export default function Profile() {
 
   return (
     <>
-      <Box
-        m={[5, 8]}
-        _hover={{
-          cursor: "pointer",
-        }}
-      >
+      <Box m={[5, 8]}>
         <Image
           src={Back}
           alt="back"
           width="30px"
           height="30px"
+          style={{
+            cursor: "pointer",
+          }}
           onClick={() => router.push("/")}
         />
       </Box>
@@ -79,7 +77,7 @@ export default function Profile() {
         ) : (
           <Box maxW={"container.sm"} w={"100%"}>
             {/* Profile with the name and email section */}
-            <VStack gap='20px'>
+            <VStack gap="20px">
               <Center>
                 <ChakraImage
                   src={user ? user.photoURL : defaultImage}
@@ -106,16 +104,13 @@ export default function Profile() {
 
                 {user ? (
                   <>
-                    {
-                        data.length > 0 ?
-                        data.map((d) => {
+                    {data.length > 0 ? (
+                      data.map((d) => {
                         return <Review key={v4()} review={d} />;
-                        })
-                        :
-                        <Text>
-                            You have made no review yet!
-                        </Text>
-                    }
+                      })
+                    ) : (
+                      <Text>You have made no review yet!</Text>
+                    )}
                     <Button
                       bg="blue"
                       color="white"

@@ -55,6 +55,9 @@ export default function Login() {
             alt="back"
             width="30px"
             height="30px"
+            style={{
+              cursor: "pointer",
+            }}
             onClick={() => router.push("/")}
           />
           <Center>
