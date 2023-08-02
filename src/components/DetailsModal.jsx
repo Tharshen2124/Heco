@@ -30,6 +30,7 @@ import { apiHandler } from "@/util/apiHandler";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { SearchIcon } from "@chakra-ui/icons";
+import SentimentIcon from "./SentimentIcon";
 
 export default function DetailsModal({ facility_id, facilities }) {
   const router = useRouter();
@@ -209,7 +210,7 @@ export default function DetailsModal({ facility_id, facilities }) {
                   }
                   gap={1}
                 >
-                  <TagFacesIcon />
+                  <SentimentIcon sentiment={sentiment}/>
                   <Text fontWeight="bold">{sentiment}</Text>
                 </HStack>
               </HStack>

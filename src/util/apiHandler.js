@@ -111,16 +111,10 @@ export const apiHandler = (() => {
         const length = facility.data().images.length;
         const result = [];
 
-        // facility.data().images.forEach(async (image) => {
-        //     result.push(await (getDownloadURL(ref(storage, `${image}`))))
-        //     console.log(image)
-        //     console.log(result)
-        // })
         for(let i=0; i<length; i++) {
             const res = await getDownloadURL(ref(storage, `${facility.data().images[i]}`))
             result.push(res);
         }
-        console.log(result)
         return result;
         
     }
