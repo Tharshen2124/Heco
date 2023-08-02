@@ -183,7 +183,7 @@ export default function DetailsModal({ facility, facilities }) {
                     console.log(review)
                   })}
                 </VStack>
-                <HStack width="100%" gap="5px">
+                <HStack width="100%">
                   <Link href="/details/[facility_id]" as={`/details/${data.id}`}>
                     <Button
                       maxW="container.md"
@@ -212,27 +212,20 @@ export default function DetailsModal({ facility, facilities }) {
                       w="43%"
                       borderColor="#000AFF"
                       borderWidth="3px"
-                      bg="white"
+                      bg="blue"
                       position="absolute"
                       bottom="15px"
                       right="20px"
-                      css={{
-                        "&:hover": {
-                          backgroundColor: "#020ad4",
-                          "& .chakra-text": {
-                            color: "white",
-                          },
-                        },
-                        "&:active": {
-                          backgroundColor: "#020ad4",
-                          "& .chakra-text": {
-                            color: "white",
-                          },
-                        },
+                      color={'white'}
+                      _hover={{
+                        backgroundColor: "#020ad4",
+                      }}
+                      _active={{
+                        backgroundColor: "#020ad4",
                       }}
                     >
                       <Center>
-                        <Text color="#000AFF">Create Review</Text>
+                        <Text>Create Review</Text>
                       </Center>
                     </Button>
                   </Link>

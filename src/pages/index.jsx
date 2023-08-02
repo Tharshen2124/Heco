@@ -232,11 +232,12 @@ export default function Home({ data }) {
                     h="40px"
                     style={{ borderRadius: "100%" }}
                     onClick={() => router.push("/profile")}
-                    transition="all 0.2s"
+                    transition="all 0.3s"
                     _hover={{
                       cursor: "pointer",
-                      border: "3px solid blue",
+                      border: "1px solid blue",
                     }}
+                    boxShadow={'lg'}
                   />
                 ) : (
                   <Button
