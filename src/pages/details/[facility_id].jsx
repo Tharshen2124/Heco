@@ -63,6 +63,12 @@ export default function Details({ facility, review, images, data }) {
   }
 
   useEffect(() => {
+    if (!user && !loading) {
+      router.push("/login");
+    }
+  }, [user, loading, error, router]);
+
+  useEffect(() => {
     let temp = 0;
     for (let i = 0; i < 5; i++) {
       temp += facility.cost_rating[i] * (i + 1);
@@ -144,23 +150,25 @@ export default function Details({ facility, review, images, data }) {
         </Center>
       ) : (
         <Container px={[5, 0]} py={5} maxW={["100vw", "90vw"]} w={["100vw"]}>
-          <Image
-            src={Back}
-            alt="back"
-            width="30px"
-            height="30px"
-            style={{
+          <Box
+            _hover={{
               cursor: "pointer",
             }}
-            onClick={() => router.push("/")}
-          />
+          >
+            <Image
+              src={Back}
+              alt="back"
+              width="30px"
+              height="30px"
+              onClick={() => router.push("/")}
+            />
+          </Box>
           <Flex direction="column" alignItems="center">
             <Heading size="md" pt={5}>
               {facility.name}
             </Heading>
           </Flex>
-
-          <Flex justifyContent="center" alignItems="center">
+          <VStack >
             <HStack pt={5}>
               <Swiper
                 slidesPerView="auto"
@@ -183,7 +191,45 @@ export default function Details({ facility, review, images, data }) {
                 })}
               </Swiper>
             </HStack>
-          </Flex>
+            <VStack>
+              <HStack pt={5}>
+                  <Text fontWeight="bold">Specialisation </Text>
+                  <SearchIcon />
+              </HStack>
+                <HStack mt={2}>
+                  <Swiper
+                    slidesPerView="auto"
+                    freeMode={true}
+                    modules={[FreeMode]}
+                    spaceBetween={10}
+                  >
+                    {facility.tags.map((i, index) => (
+                      <SwiperSlide style={{ width: "auto" }} key={v4()}>
+                        <Tag
+                          px="20px"
+                          py="10px"
+                          borderRadius="10px"
+                          userSelect="none"
+                          fontSize="md"
+                          transition={"all 0.2s"}
+                          _hover={{
+                            cursor: "pointer",
+                            backgroundColor: "blue",
+                            color: "white",
+                          }}
+                          marginLeft={index === 0 ? "10px" : 0}
+                          marginRight={
+                            index === facility.tags.length - 1 ? "10px" : 0
+                          }
+                        >
+                          {i}
+                        </Tag>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </HStack>
+              </VStack>
+          </VStack>
 
           <Flex
             gap={{ base: "10px", lg: "30px" }}
@@ -314,42 +360,7 @@ export default function Details({ facility, review, images, data }) {
               >
                 <LocationOnIcon /> Direction
               </Button>
-              <HStack pt={5}>
-                <Text fontWeight="bold">Specialisation </Text>
-                <SearchIcon />
-              </HStack>
-              <HStack mt={2}>
-                <Swiper
-                  slidesPerView="auto"
-                  freeMode={true}
-                  modules={[FreeMode]}
-                  spaceBetween={10}
-                >
-                  {facility.tags.map((i, index) => (
-                    <SwiperSlide style={{ width: "auto" }} key={v4()}>
-                      <Tag
-                        px="20px"
-                        py="10px"
-                        borderRadius="10px"
-                        userSelect="none"
-                        fontSize="md"
-                        transition={"all 0.2s"}
-                        _hover={{
-                          cursor: "pointer",
-                          backgroundColor: "blue",
-                          color: "white",
-                        }}
-                        marginLeft={index === 0 ? "10px" : 0}
-                        marginRight={
-                          index === facility.tags.length - 1 ? "10px" : 0
-                        }
-                      >
-                        {i}
-                      </Tag>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </HStack>
+              
             </Flex>
 
             <Flex direction="column" gap="10px" w="100%" maxW="container.md">
