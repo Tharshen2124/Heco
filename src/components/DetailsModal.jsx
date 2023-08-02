@@ -35,7 +35,7 @@ export default function DetailsModal({ facility, facilities }) {
   const router = useRouter();
   const [data, setData] = useState({})
   const [review, setReview] = useState([])
-  const [images, setImages] = useState("")
+  const [images, setImages] = useState()
   const [tags, setTags] = useState({})
 
   useEffect(() => {
@@ -43,7 +43,8 @@ export default function DetailsModal({ facility, facilities }) {
       const review = await apiHandler.getReviewOfFacility(facility);
       const images = await apiHandler.getFacilityImage(facility);
       setReview(review);
-      setImages(images || [])
+      setImages(images)
+      console.log(images)
     };
 
     facilities.map((fac) => {
@@ -82,7 +83,8 @@ export default function DetailsModal({ facility, facilities }) {
             <Flex justifyContent="center" alignItems="center">
               {images ? (
                 <ChakraImage
-                  src={images}
+                  key={v4()}
+                  src={images[0]}
                   alt="hospital-picture"
                   width={250}
                   height={175}
