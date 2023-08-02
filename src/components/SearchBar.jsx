@@ -66,7 +66,7 @@ export default function SearchBar({ facilities, setFacility }) {
                 }}
                 p="5px 10px"
                 borderRadius={"5px"}
-                onClick={() => setFacility(i.id)}
+                onClick={() => setFacility(i.item.id)}
               >
                 {i.item.name}
               </Box>
