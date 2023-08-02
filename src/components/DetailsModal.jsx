@@ -14,6 +14,7 @@ import {
   Button,
   Center,
   Tag,
+  Spinner,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { v4 } from "uuid";
@@ -34,20 +35,23 @@ export default function DetailsModal({ facility, facilities }) {
   const router = useRouter();
   const [data, setData] = useState({})
   const [review, setReview] = useState([])
+  const [images, setImages] = useState("")
 
   useEffect(() => {
     const loadReview = async () => {
       const review = await apiHandler.getReviewOfFacility(facility);
+      const images = await apiHandler.getFacilityImage(facility);
       setReview(review);
+      setImages(images || [])
     };
 
     facilities.map((fac) => {
       if (fac.id === facility) {
-        setData(fac)
+        setData(fac);
       }
-    })
+    });
     loadReview();
-  }, [data, facilities, facility])
+  }, [data, facilities, facility]);
 
   const changePage = () => {
     router.push(`/review/${data.id}`)
@@ -88,12 +92,16 @@ export default function DetailsModal({ facility, facilities }) {
                 w={{ base: "100%", lg: "50%" }}
               >
                 <Flex justifyContent="center" alignItems="center">
-                  <Image
-                    src={hospitalPic}
-                    alt="hospital-picture"
-                    width={185}
-                    height={125}
-                  />
+                  {images ? (
+                    <img
+                      src={images}
+                      alt="hospital-picture"
+                      width={185}
+                      height={125}
+                    />
+                  ) : (
+                    <Spinner />
+                  )}
                 </Flex>
                 <HStack overflowX="hidden" mt={2}>
                   <Swiper
