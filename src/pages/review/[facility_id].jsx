@@ -126,7 +126,13 @@ export default function Review({facility}) {
                   defaultValue={2}
                   min={1}
                   max={5}
-                  colorScheme="red"
+                  colorScheme={
+                    sliderValue == 1 || sliderValue == 2
+                      ? "red"
+                      : sliderValue == 3
+                      ? "yellow"
+                      : "green"
+                  }
                   value={sliderValue}
                   onChange={(v) => setSliderValue(v)}
                   onMouseEnter={() => setShowTooltip(true)}
@@ -152,8 +158,14 @@ export default function Review({facility}) {
                   </SliderTrack>
                   <Tooltip
                     hasArrow
-                    bg="red.500"
-                    color="white"
+                    bg={
+                      sliderValue == 1 || sliderValue == 2
+                        ? "red"
+                        : sliderValue == 3
+                        ? "yellow"
+                        : "green"
+                    }
+                    color={sliderValue == 3 ? "black" : "white"}
                     placement="top"
                     isOpen={showTooltip}
                     label={`${sliderValue}`}
