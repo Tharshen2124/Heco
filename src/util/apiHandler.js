@@ -33,6 +33,7 @@ export const apiHandler = (() => {
 
             const reviewRef = await addDoc(collection(db, "reviews"), {
                 author_id: user.id,
+                facility_id: facility_id,
                 author_name: user.name,
                 image: user.image,
                 review: review.content,
