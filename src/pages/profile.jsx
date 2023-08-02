@@ -18,12 +18,13 @@ import { useRouter } from "next/router";
 import Back from "../../public/back.svg";
 import Image from "next/image";
 
-export default function Profile() {
+export default function Profile({ reviewdata }) {
   const router = useRouter();
   const [user, loading, error] = useAuthState(auth);
   const [data, setData] = useState([]);
   const defaultImage =
     "https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png";
+  const [facility, setFacility] = useState("");
 
   const handleLogout = async () => {
     try {
@@ -43,6 +44,13 @@ export default function Profile() {
       (async () => {
         const res = await apiHandler.getReviewOfUser(user.uid);
         setData(res);
+        for(const i in res){
+          for(const j in reviewdata){
+            if(res[i].facility_id == reviewdata[j].id){
+              setFacility(reviewdata[j]);
+            }
+          }
+        }
       })();
     } else {
       setData([]);
@@ -106,7 +114,7 @@ export default function Profile() {
                   <>
                     {data.length > 0 ? (
                       data.map((d) => {
-                        return <Review key={v4()} review={d} />;
+                        return <Review key={v4()} review={d} facility={facility} />;
                       })
                     ) : (
                       <Text>You have made no review yet!</Text>
@@ -149,4 +157,13 @@ export default function Profile() {
       </Center>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  const facilities = await apiHandler.getFacilities();
+  return {
+    props: {
+      reviewdata: facilities,
+    },
+  };
 }
