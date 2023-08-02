@@ -42,7 +42,7 @@ export const apiHandler = (() => {
             const data = facilitySnapshot.data();
 
             data.cost_rating[review.cost_rating - 1] += 1;
-            data[sentiment] += 1;
+            data.sentiment[sentiment === 'neutral' || sentiment === 'mixed' ? 1 : (sentiment === 'negative' ? 0 : 2)] += 1;
             data.reviews.push(reviewRef.id);
 
             await setDoc(

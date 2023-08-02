@@ -6,9 +6,6 @@ export default function compute(facilities){
     const scores = [];
     for(const i of facilities){
         
-        const cost_rating = [];
-
-
-        scores.push(getScore(i.distance, ))
+        scores.push(getScore(i.distance, i.cost_ratings, ))
     }
 }
