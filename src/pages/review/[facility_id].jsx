@@ -52,23 +52,6 @@ export default function Review({facility, image}) {
     }
   },[user, loading, error])
 
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position);
-      setCoordinate({
-        longitude: position.coords.longitude,
-        latitude: position.coords.latitude,
-      });
-    });
-    const id = navigator.geolocation.watchPosition((position) => {
-      console.log(position);
-      setCoordinate({
-        longitude: position.coords.longitude,
-        latitude: position.coords.latitude,
-      });
-    });
-  })
-
     return user ? (
       <>
         {loading ? (

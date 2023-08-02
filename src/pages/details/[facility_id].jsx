@@ -32,14 +32,28 @@ import { apiHandler } from "@/util/apiHandler";
 import { useEffect, useState } from "react";
 import Back from "../../../public/back.svg";
 import Image from "next/image";
+import compute from "@/util/compute";
 
-export default function Details({ facility, review, images }) {
+export default function Details({ facility, review, images, data }) {
   const router = useRouter();
   const facility_id = router.query.facility_id;
   const [user, loading, error] = useAuthState(auth);
   const [tags, setTags] = useState({});
   const [cost, setCost] = useState(0);
   const [sentiment, setSentiment] = useState("");
+  const [facilities, setFacilities] = useState(data);
+  const [bestFacilityId, setBestFacilityId] = useState("");
+
+  const [coordinate, setCoordinate] = useState({
+    longitude: 101.61722,
+    latitude: 3.064785,
+  });
+
+  const [weight, setWeight] = useState({
+    distance: 3,
+    cost: 2,
+    sentiment: 1,
+  });
 
   function openGoogleMap() {
     // Create the URL with the destination
@@ -79,7 +93,42 @@ export default function Details({ facility, review, images }) {
     } else {
       setSentiment(["Mostly Negative", "Neutral", "Mostly Positive"][mx[1]]);
     }
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log(position);
+      setCoordinate({
+        longitude: position.coords.longitude,
+        latitude: position.coords.latitude,
+      });
+    });
+
+    const id = navigator.geolocation.watchPosition((position) => {
+      console.log(position);
+      setCoordinate({
+        longitude: position.coords.longitude,
+        latitude: position.coords.latitude,
+      });
+    });
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      const sources = [`${coordinate.longitude},${coordinate.latitude}`]
+          .concat(data.map((i) => `${i.longitude},${i.latitude}`))
+          .join(";");
+        const url = `https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${sources}?sources=0&annotations=distance&access_token=${process.env.NEXT_PUBLIC_MAP_BOX_ACCESS_TOKEN}`;
+  
+        const response = await fetch(url);
+        const res_data = await response.json();
+        for (let i = 1; i < res_data.distances[0].length; i++) {
+          data[i - 1].distance = res_data.distances[0][i] / 1000;
+        }
+        const res = compute(weight, data);
+        setBestFacilityId(res.best_facility);
+        setFacilities([...res.temp]);
+    })()
+    console.log(coordinate);
+  }, [coordinate]);
 
   return (
     <>
@@ -340,11 +389,13 @@ export async function getServerSideProps(context) {
   const facility = await apiHandler.getFacility(params.facility_id);
   const review = await apiHandler.getReviewOfFacility(params.facility_id);
   const images = await apiHandler.getFacilityImage(params.facility_id);
+  const facilities = await apiHandler.getFacilities();
   return {
     props: {
       facility,
       review,
       images,
+      data: facilities,
     },
   };
 }
