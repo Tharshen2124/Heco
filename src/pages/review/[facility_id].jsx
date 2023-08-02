@@ -32,14 +32,17 @@ export default function Review({facility}) {
   const [user, loading, error] = useAuthState(auth);
   const [sliderValue, setSliderValue] = React.useState(3);
   const [showTooltip, setShowTooltip] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const toast = useToast();
   const [review, setReview] = React.useState("");
   
   const handleSubmit = async () => {
+    setIsSubmitting(true);
     await apiHandler.uploadReview(facility_id, {content: review, cost_rating: sliderValue}, {id: user.uid, name: user.displayName ,image: user.photoURL});
     setSliderValue(1);
     setReview("");
     toast({ title: "Review submitted!", status: "success" });
+    setIsSubmitting(false);
   };
 
   useEffect(() => {
@@ -59,8 +62,8 @@ export default function Review({facility}) {
               color="#3e3bf5"
               boxSize={20}
             />
-            </Center>
-          ) : (
+          </Center>
+        ) : (
           <Container px={5} py={5}>
             <Box
               _hover={{
@@ -103,8 +106,8 @@ export default function Review({facility}) {
                 mt={5}
                 textAlign="left"
               >
-                1. On a scale of 1 to 5, with 1 being the highest cost and 5 being
-                the lowest cost, how would you rate the overall cost of
+                1. On a scale of 1 to 5, with 1 being the highest cost and 5
+                being the lowest cost, how would you rate the overall cost of
                 {` ${facility.name}`}?
               </Text>
 
@@ -186,6 +189,8 @@ export default function Review({facility}) {
                 _active={{
                   backgroundColor: "#020ad4",
                 }}
+                isLoading={isSubmitting}
+                loadingText="Submitting"
                 onClick={() => handleSubmit()}
               >
                 Confirm

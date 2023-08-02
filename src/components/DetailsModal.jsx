@@ -189,8 +189,22 @@ export default function DetailsModal({ facility, facilities }) {
                 <Divider bg="gray.800" borderWidth="1px" />
                 <VStack mt={3} px={-5} gap={5}>
                   {review.map((review, i) => {
-                    if (i < 3) return <Review review={review} />;
-                    console.log(review);
+                    if (i < 3) {
+                      return <Review review={review} key={v4()}/>;
+                    } else {
+                      return (
+                        <Center key={v4()}>
+                          <Text
+                            color="blue"
+                            fontWeight="bold"
+                            onClick={changePage}
+                            mt={5}
+                          >
+                            Click view details to view more reviews
+                          </Text>
+                        </Center>
+                      );
+                    }
                   })}
                 </VStack>
                 <Center>
@@ -210,7 +224,7 @@ export default function DetailsModal({ facility, facilities }) {
                         bg="#000AFF"
                         position="absolute"
                         bottom="15px"
-                        left={["20px", "50px"]}
+                        left={["20px", "40px"]}
                         css={{
                           "&:hover": {
                             backgroundColor: "#020ad4",
@@ -236,7 +250,7 @@ export default function DetailsModal({ facility, facilities }) {
                         bg="blue"
                         position="absolute"
                         bottom="15px"
-                        right={["20px", "30px"]}
+                        right={["20px", "40px"]}
                         color={"white"}
                         _hover={{
                           backgroundColor: "#020ad4",
