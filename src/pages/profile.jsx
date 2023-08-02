@@ -1,12 +1,13 @@
 import { Review } from "@/components/Review";
-import { 
-  Box, 
-  Button, 
-  Center, 
-  Heading, 
-  Spinner, 
-  VStack, 
-  Image as ChakraImage 
+import {
+  Box,
+  Button,
+  Center,
+  Heading,
+  Spinner,
+  VStack,
+  Text,
+  Image as ChakraImage,
 } from "@chakra-ui/react";
 import { apiHandler } from "@/util/apiHandler";
 import { auth } from "../../firebaseConfig";
@@ -35,7 +36,7 @@ export default function Profile() {
 
   const login = () => {
     router.push("/login");
-  }
+  };
 
   useEffect(() => {
     if (user) {
@@ -78,21 +79,23 @@ export default function Profile() {
         ) : (
           <Box maxW={"container.sm"} w={"100%"}>
             {/* Profile with the name and email section */}
-            <Box>
+            <VStack gap='20px'>
               <Center>
                 <ChakraImage
                   src={user ? user.photoURL : defaultImage}
                   style={{ borderRadius: "100%" }}
                   alt=""
-                  w={20}
+                  w={"100px"}
+                  boxShadow={"lg"}
+                  border={"3px solid blue"}
                 />
               </Center>
               <Center pt="2">
-                <Heading as="h1" size="lg">
+                <Heading as="h1" fontSize={"25px"}>
                   {user ? user.displayName : "User"}
                 </Heading>
               </Center>
-            </Box>
+            </VStack>
 
             {/* reviews and logout button section */}
             <Box as="section" mt="10" px="6" mb="10">
@@ -103,14 +106,26 @@ export default function Profile() {
 
                 {user ? (
                   <>
-                    {data.map((d) => {
-                      return <Review key={v4()} review={d} />;
-                    })}
+                    {
+                        data.length > 0 ?
+                        data.map((d) => {
+                        return <Review key={v4()} review={d} />;
+                        })
+                        :
+                        <Text>
+                            You have made no review yet!
+                        </Text>
+                    }
                     <Button
                       bg="blue"
                       color="white"
                       w={["50%", "20%"]}
-                      _hover={{ bg: "gray.200", color: "blue" }}
+                      _hover={{
+                        backgroundColor: "#020ad4",
+                      }}
+                      _active={{
+                        backgroundColor: "#020ad4",
+                      }}
                       onClick={handleLogout}
                     >
                       Logout
@@ -121,7 +136,12 @@ export default function Profile() {
                     bg="blue"
                     color="white"
                     w="250px"
-                    _hover={{ bg: "gray.200", color: "blue" }}
+                    _hover={{
+                      backgroundColor: "#020ad4",
+                    }}
+                    _active={{
+                      backgroundColor: "#020ad4",
+                    }}
                     onClick={login}
                   >
                     Login to see your reviews
