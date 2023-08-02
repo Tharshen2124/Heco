@@ -31,44 +31,59 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { SearchIcon } from "@chakra-ui/icons";
 
-export default function DetailsModal({ facility, facilities }) {
+export default function DetailsModal({ facility_id, facilities }) {
   const router = useRouter();
-  const [data, setData] = useState({})
   const [review, setReview] = useState([])
   const [images, setImages] = useState()
-  const [tags, setTags] = useState({})
+  const [cost, setCost] = useState(0);
+  const [sentiment, setSentiment] = useState("");
+  const facility = facilities.filter(i => i.id === facility_id)[0];
 
   useEffect(() => {
+    let temp = 0;
+    for(let i = 0; i < 5; i++){
+        temp += facility.cost_rating[i] * (i+1);
+    }
+    console.log(temp);
+    setCost(temp);
+
+    const mx = [0, 0, 0]
+    for(let i = 0; i < 3; i++){
+        if (facility.sentiment[i] > mx[0]){
+            mx[0] = facility.sentiment[i];
+            mx[1] = i;
+            mx[2] = 0;
+        }
+        if (facility.sentiment[i] === mx[0]){
+            mx[2] += 1;
+        }
+    }
+
+    if (mx[2] === 3){
+        setSentiment('Neutral');
+    }else if (mx[2] === 2){
+        if (sentiment[2] === mx[0]){
+            setSentiment(sentiment[1] === mx[0] ? 'Mostly Positive' : 'Neutral');
+        }else{
+            setSentiment('Neutral');
+        }
+    }else{
+        setSentiment(['Mostly Negative','Neutral', 'Mostly Positive'][mx[1]]);
+    }
+
     const loadReview = async () => {
-      const review = await apiHandler.getReviewOfFacility(facility);
-      const images = await apiHandler.getFacilityImage(facility);
+      const review = await apiHandler.getReviewOfFacility(facility_id);
+      const images = await apiHandler.getFacilityImage(facility_id);
       setReview(review);
       setImages(images)
     };
 
-    facilities.map((fac) => {
-      if (fac.id === facility) {
-        setData(fac);
-      }
-    });
     loadReview();
-  }, [data, facilities, facility]);
+  }, []);
 
   const changePage = () => {
-    router.push(`/review/${data.id}`)
+    router.push(`/review/${facility_id}`)
   };
-
-  useEffect(() => {
-    const temp = {};
-    for (const i of facilities) {
-      if( i.id == facility) {
-        for(const j of i.tags) {
-          temp[j] = true;
-        }
-      }
-    }
-    setTags({ ...temp });
-  }, []);    
 
     return (
       <>
@@ -76,7 +91,7 @@ export default function DetailsModal({ facility, facilities }) {
         <DrawerContent height="92vh" borderRadius="10px">
           <VStack>
             <DrawerCloseButton position="absolute" left="10px" top="15px" />
-            <DrawerHeader>{data.name}</DrawerHeader>
+            <DrawerHeader>{facility.name}</DrawerHeader>
           </VStack>
           <DrawerBody>
             <Flex justifyContent="center" alignItems="center">
@@ -118,11 +133,9 @@ export default function DetailsModal({ facility, facilities }) {
                     modules={[FreeMode]}
                     spaceBetween={10}
                   >
-                    {Object.keys(tags).map((i, index) => (
+                    {facility.tags.map((i, index) => (
                       <SwiperSlide style={{ width: "auto" }} key={v4()}>
                         <Tag
-                          bg={tags[i] ? "blue" : "white"}
-                          color={tags[i] ? "white" : "black"}
                           px="20px"
                           py="10px"
                           borderRadius="10px"
@@ -135,8 +148,7 @@ export default function DetailsModal({ facility, facilities }) {
                             color: "white",
                           }}
                           marginLeft={index === 0 ? "10px" : 0}
-                          marginRight={index === tags.length - 1 ? "10px" : 0}
-                          onClick={() => toggleTags(i)}
+                          marginRight={index === facility.tags.length - 1 ? "10px" : 0}
                         >
                           {i}
                         </Tag>
@@ -153,7 +165,7 @@ export default function DetailsModal({ facility, facilities }) {
                   py={4}
                 >
                   <Text fontSize="md" fontWeight="semibold" color="black">
-                    Distance: 30km
+                    Distance: {facility.distance.toFixed(2)} km
                   </Text>
                   <HStack w="100%" justifyContent="space-between">
                     <Text
@@ -165,11 +177,19 @@ export default function DetailsModal({ facility, facilities }) {
                       Cost Rating:
                     </Text>
                     <Progress
-                      colorScheme="red"
+                      colorScheme={
+                        cost >= 4 ?
+                        'green'
+                        :
+                        cost >= 3 ?
+                        'yellow'
+                        :
+                        "red"
+                      }
                       width="170px"
                       mt={3}
                       borderRadius={20}
-                      value={60}
+                      value={cost / 5 * 100}
                     />
                   </HStack>
                 </Box>
@@ -182,9 +202,9 @@ export default function DetailsModal({ facility, facilities }) {
               >
                 <HStack justifyContent="space-between" w="100%" pt={3}>
                   <Text fontWeight="bold">Reviews</Text>
-                  <HStack alignItems="center" color="#2DFF00" gap={1}>
+                  <HStack alignItems="center" color={sentiment === 'Mostly Positive' ? "#2DFF00" : sentiment === 'Neutral' ? 'black' : 'red'} gap={1}>
                     <TagFacesIcon />
-                    <Text fontWeight="bold">Mostly Positive</Text>
+                    <Text fontWeight="bold">{sentiment}</Text>
                   </HStack>
                 </HStack>
                 <Divider bg="gray.800" borderWidth="1px" />
@@ -216,7 +236,7 @@ export default function DetailsModal({ facility, facilities }) {
                 <HStack width="100%">
                   <Link
                     href="/details/[facility_id]"
-                    as={`/details/${data.id}`}
+                    as={`/details/${facility.id}`}
                   >
                     <Center>
                       <Button
@@ -241,7 +261,7 @@ export default function DetailsModal({ facility, facilities }) {
                       </Button>
                     </Center>
                   </Link>
-                  <Link href="/review/[facility_id]" as={`/review/${data.id}`}>
+                  <Link href="/review/[facility_id]" as={`/review/${facility.id}`}>
                     <Center>
                       <Button
                         maxW="container.md"

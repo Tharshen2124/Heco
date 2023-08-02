@@ -46,10 +46,10 @@ export default function Home({ data }) {
   const router = useRouter();
   const defaultImage =
     "https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png";
-  const [bestFacility, setBestFacility] = useState("");
   const [user, loading, error] = useAuthState(auth);
   const [tags, setTags] = useState({});
-  const [facility, setFacility] = useState("");
+  const [bestFacilityId, setBestFacilityId] = useState("");
+  const [facilityId, setFacilityId] = useState("");
   const [facilities, setFacilities] = useState(data);
   const {
     isOpen: isOpenConfig,
@@ -97,17 +97,17 @@ export default function Home({ data }) {
   };
 
   const locate = () => {
-    viewFacility(bestFacility);
+    viewFacility(bestFacilityId);
   };
 
   const viewFacility = (facility_id) => {
-    setFacility(facility_id);
+    setFacilityId(facility_id);
     onOpenDetails();
   };
 
   useEffect(() => {
     const res = compute(weight, facilities);
-    setBestFacility(res.best_facility);
+    setBestFacilityId(res.best_facility);
     setFacilities([...res.temp]);
   }, [weight, coordinate]);
 
@@ -124,7 +124,7 @@ export default function Home({ data }) {
         data[i - 1].distance = res_data.distances[0][i] / 1000;
       }
       const res = compute(weight, data);
-      setBestFacility(res.best_facility);
+      setBestFacilityId(res.best_facility);
       setFacilities([...res.temp]);
     })();
   }, []);
@@ -144,7 +144,7 @@ export default function Home({ data }) {
       if (ok) temp.push({ ...i });
     }
     const res = compute(weight, temp);
-    setBestFacility(res.best_facility);
+    setBestFacilityId(res.best_facility);
     setFacilities([...res.temp]);
   }, [tags]);
 
@@ -185,7 +185,7 @@ export default function Home({ data }) {
             onClose={onCloseDetails}
             placement="bottom"
           >
-            <DetailsModal facility={facility} facilities={facilities} />
+            <DetailsModal facility_id={facilityId} facilities={facilities} />
           </Drawer>
           <Modal
             isOpen={isOpenConfig}
