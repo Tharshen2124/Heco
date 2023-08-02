@@ -18,7 +18,6 @@ import {
   Image as ChakraImage,
 } from "@chakra-ui/react";
 import { v4 } from "uuid";
-import TagFacesIcon from "@mui/icons-material/TagFaces";
 import { Review } from "./Review";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";

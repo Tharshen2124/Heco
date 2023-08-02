@@ -16,17 +16,18 @@ import {
   Button,
   Center,
   Spinner,
+  Image as ChakraImage,
 } from "@chakra-ui/react"
 import Image from 'next/image';
-import hospitalPic from '../../../public/hospital_cyberjaya.png';
 import { auth } from "../../../firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
 import { apiHandler } from "@/util/apiHandler";
 import React, { useEffect } from "react";
 import Back from "../../../public/back.svg";
+import { v4 } from "uuid";
 
-export default function Review({facility}) {
+export default function Review({facility, image}) {
   const router = useRouter();
   const facility_id = router.query.facility_id;
   const [user, loading, error] = useAuthState(auth);
@@ -50,6 +51,23 @@ export default function Review({facility}) {
         router.push('/login');
     }
   },[user, loading, error])
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log(position);
+      setCoordinate({
+        longitude: position.coords.longitude,
+        latitude: position.coords.latitude,
+      });
+    });
+    const id = navigator.geolocation.watchPosition((position) => {
+      console.log(position);
+      setCoordinate({
+        longitude: position.coords.longitude,
+        latitude: position.coords.latitude,
+      });
+    });
+  })
 
     return user ? (
       <>
@@ -92,13 +110,17 @@ export default function Review({facility}) {
               {facility.name}
             </Heading>
             <VStack>
-              <Image
-                src={hospitalPic}
-                alt="hospital-picture"
-                width={310}
-                height={250}
-              />
-
+              {image ? (
+                <ChakraImage
+                  key={v4()}
+                  src={image[0]}
+                  alt="hospital-picture"
+                  width={250}
+                  height={175}
+                />
+              ) : (
+                <Spinner />
+              )}
               <Text
                 fontSize="md"
                 fontWeight="semibold"
@@ -217,9 +239,11 @@ export default function Review({facility}) {
 export async function getServerSideProps(context){
     const { params } = context;
     const facility = await apiHandler.getFacility(params.facility_id);
+    const image = await apiHandler.getFacilityImage(params.facility_id);
     return{
         props: {
-            facility
+            facility,
+            image
         }
     }
 }
