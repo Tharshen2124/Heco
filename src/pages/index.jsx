@@ -51,6 +51,8 @@ export default function Home({ data }) {
   const [bestFacilityId, setBestFacilityId] = useState("");
   const [facilityId, setFacilityId] = useState("");
   const [facilities, setFacilities] = useState(data);
+  const [location, setLocation] = useState();
+
   const {
     isOpen: isOpenConfig,
     onOpen: onOpenConfig,
@@ -127,6 +129,15 @@ export default function Home({ data }) {
       setBestFacilityId(res.best_facility);
       setFacilities([...res.temp]);
     })();
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log(position);
+      setCoordinate({ longitude: position.coords.longitude, latitude: position.coords.latitude });
+    });
+    const id = navigator.geolocation.watchPosition((position) => {
+      console.log(position);
+      setCoordinate({ longitude: position.coords.longitude, latitude: position.coords.latitude });
+    });
   }, []);
 
   useEffect(() => {
