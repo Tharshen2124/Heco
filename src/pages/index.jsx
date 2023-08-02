@@ -107,15 +107,8 @@ export default function Home({ data }) {
     onOpenDetails();
   };
 
-  useEffect(() => {
-    const res = compute(weight, facilities);
-    setBestFacilityId(res.best_facility);
-    setFacilities([...res.temp]);
-  }, [weight, coordinate]);
-
-  useEffect(() => {
-    (async () => {
-      const sources = [`${coordinate.longitude},${coordinate.latitude}`]
+  const fetchDistance = async () => {
+    const sources = [`${coordinate.longitude},${coordinate.latitude}`]
         .concat(data.map((i) => `${i.longitude},${i.latitude}`))
         .join(";");
       const url = `https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${sources}?sources=0&annotations=distance&access_token=${process.env.NEXT_PUBLIC_MAP_BOX_ACCESS_TOKEN}`;
@@ -128,17 +121,36 @@ export default function Home({ data }) {
       const res = compute(weight, data);
       setBestFacilityId(res.best_facility);
       setFacilities([...res.temp]);
-    })();
+  }
+
+  useEffect(() => {
+    const res = compute(weight, facilities);
+    setBestFacilityId(res.best_facility);
+    setFacilities([...res.temp]);
+  }, [weight, coordinate]);
+
+  useEffect(() => {
+    fetchDistance();
 
     navigator.geolocation.getCurrentPosition((position) => {
       console.log(position);
-      setCoordinate({ longitude: position.coords.longitude, latitude: position.coords.latitude });
+      setCoordinate({
+        longitude: position.coords.longitude,
+        latitude: position.coords.latitude,
+      });
     });
     const id = navigator.geolocation.watchPosition((position) => {
       console.log(position);
-      setCoordinate({ longitude: position.coords.longitude, latitude: position.coords.latitude });
+      setCoordinate({
+        longitude: position.coords.longitude,
+        latitude: position.coords.latitude,
+      });
     });
   }, []);
+
+  useEffect(() => {
+    fetchDistance();
+  }, [coordinate]);
 
   useEffect(() => {
     const temp = [];
