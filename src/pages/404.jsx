@@ -11,7 +11,6 @@ import {
 import Image from 'next/image';
 import ErrorIllus from "../../public/404.svg";
 import { ArrowBackIcon } from '@chakra-ui/icons';
-import { Link } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 export default function Error() {
