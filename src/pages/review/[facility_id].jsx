@@ -30,14 +30,14 @@ export default function Review({facility}) {
   const router = useRouter();
   const facility_id = router.query.facility_id;
   const [user, loading, error] = useAuthState(auth);
-  const [sliderValue, setSliderValue] = React.useState(0);
+  const [sliderValue, setSliderValue] = React.useState(3);
   const [showTooltip, setShowTooltip] = React.useState(false);
   const toast = useToast();
   const [review, setReview] = React.useState("");
   
   const handleSubmit = async () => {
     await apiHandler.uploadReview(facility_id, {content: review, cost_rating: sliderValue}, {id: user.uid, name: user.displayName ,image: user.photoURL});
-    setSliderValue(0);
+    setSliderValue(1);
     setReview("");
     toast({ title: "Review submitted!", status: "success" });
   };
