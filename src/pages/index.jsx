@@ -40,10 +40,12 @@ import DetailsModal from "@/components/DetailsModal";
 import { apiHandler } from "@/util/apiHandler";
 import { auth } from "../../firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
+import compute from "@/util/compute";
 
 export default function Home({ data }) {
   const router = useRouter();
   const defaultImage = "https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png";
+  const [bestFacility, setBestFacility] = useState("");
   const [user, loading, error] = useAuthState(auth);
   const [tags, setTags] = useState({});
   const [facility, setFacility] = useState('');
@@ -94,13 +96,38 @@ export default function Home({ data }) {
   };
 
   const locate = () => {
-    viewFacility('3CHcxBajESAwzejYIDZp');
+    viewFacility(bestFacility);
   }
 
   const viewFacility = (facility_id) => {
     setFacility(facility_id);
     onOpenDetails();
   }
+
+  useEffect(() => {
+    const res = compute(weight, facilities);
+    setBestFacility(res.best_facility); 
+    setFacilities([...res.temp]);
+  },[weight, coordinate])
+
+  useEffect(() => {
+    (async () => {
+        const sources = [`${coordinate.longitude},${coordinate.latitude}`].concat(
+            data.map(
+                i => 
+                `${i.longitude},${i.latitude}`
+            )
+        ).join(';')
+        const url = `https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${sources}?sources=0&annotations=distance&access_token=${process.env.NEXT_PUBLIC_MAP_BOX_ACCESS_TOKEN}`;
+
+        const res = await fetch(url);
+        const res_data = await res.json();
+        for(let i = 1; i < res_data.distances[0].length; i++){
+            data[i-1].distance = res_data.distances[0][i] / 1000;
+        }
+        setFacilities([...data]);
+    })()
+  },[])
 
   useEffect(() => {
     const temp = [];

@@ -44,7 +44,6 @@ export default function DetailsModal({ facility, facilities }) {
       const images = await apiHandler.getFacilityImage(facility);
       setReview(review);
       setImages(images)
-      console.log(images)
     };
 
     facilities.map((fac) => {
@@ -210,7 +209,7 @@ export default function DetailsModal({ facility, facilities }) {
                   })}
                 </VStack>
                 <Center>
-                  <Text color="black" onClick={changePage} mt={5}>
+                  <Text color="black" mt={5}>
                     Click view details to view more reviews
                   </Text>
                 </Center>
