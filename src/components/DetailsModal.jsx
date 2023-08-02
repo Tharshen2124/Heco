@@ -235,11 +235,6 @@ export default function DetailsModal({ facility_id, facilities }) {
                   }
                 })}
               </VStack>
-              <Center>
-                <Text color="black" mt={5}>
-                  Click view details to view more reviews
-                </Text>
-              </Center>
               <HStack width="100%">
                 <Link
                   href="/details/[facility_id]"
