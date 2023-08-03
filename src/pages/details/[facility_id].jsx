@@ -63,12 +63,6 @@ export default function Details({ facility, review, images, data }) {
   }
 
   useEffect(() => {
-    if (!user && !loading) {
-      router.push("/login");
-    }
-  }, [user, loading, error, router]);
-
-  useEffect(() => {
     let temp = 0;
     for (let i = 0; i < 5; i++) {
       temp += facility.cost_rating[i] * (i + 1);
@@ -154,6 +148,7 @@ export default function Details({ facility, review, images, data }) {
             _hover={{
               cursor: "pointer",
             }}
+            w='40px'
           >
             <Image
               src={Back}
