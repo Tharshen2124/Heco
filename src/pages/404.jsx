@@ -34,11 +34,13 @@ export default function Error() {
           <Button
             maxW="container.md"
             w="100%"
-            bg="#020ad4"
+            bg="blue"
             color="white"
             _hover={{
-              bg: "gray.200",
-              color: "#020ad4",
+                backgroundColor: "#020ad4"
+            }}
+            _active={{
+                backgroundColor: "#020ad4"
             }}
           >
             <Center>
