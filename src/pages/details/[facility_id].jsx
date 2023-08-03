@@ -309,12 +309,17 @@ export default function Details({
               </HStack>
             </Box>
             <Button
-              bg="gray.800"
               mt={8}
-              w="full"
-              color="white"
+              w="100%"
+              maxW="container.md"
+              bg="blue"
+              color={"white"}
               _hover={{
-                background: "blue",
+                cursor: "pointer",
+                backgroundColor: "#020ad4",
+              }}
+              _active={{
+                backgroundColor: "#020ad4",
               }}
               onClick={openGoogleMap}
             >
@@ -351,6 +356,7 @@ export default function Details({
                 return <Review review={i} key={v4()} />;
               })}
               <Button
+                mt={5}
                 w="100%"
                 maxW="container.md"
                 bg="blue"

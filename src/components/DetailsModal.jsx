@@ -30,6 +30,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { SearchIcon } from "@chakra-ui/icons";
 import SentimentIcon from "./SentimentIcon";
+import { EditIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 
 export default function DetailsModal({ facility_id, facilities }) {
   const router = useRouter();
@@ -211,7 +212,7 @@ export default function DetailsModal({ facility_id, facilities }) {
                   }
                   gap={1}
                 >
-                  <SentimentIcon sentiment={sentiment}/>
+                  <SentimentIcon sentiment={sentiment} />
                   <Text fontWeight="bold">{sentiment}</Text>
                 </HStack>
               </HStack>
@@ -222,18 +223,11 @@ export default function DetailsModal({ facility_id, facilities }) {
                     return <Review review={review} key={v4()} />;
                   }
                 })}
-                {
-                    review.length > 3 ? 
-                    <Center key={v4()}>
-                        <Text
-                            mt={5}
-                        >
-                            Click view details to view more reviews
-                        </Text>
-                    </Center>
-                    :
-                    null
-                }
+                {review.length > 3 ? (
+                  <Center key={v4()}>
+                    <Text mt={5}>Click view details to view more reviews</Text>
+                  </Center>
+                ) : null}
               </VStack>
               <HStack width="100%">
                 <Link
@@ -243,11 +237,12 @@ export default function DetailsModal({ facility_id, facilities }) {
                   <Center>
                     <Button
                       maxW="container.md"
-                      w="43%"
+                      w={["40%", "35%", "40%", "46%"]}
                       bg="#000AFF"
                       position="absolute"
                       bottom="15px"
                       left={["20px", "40px"]}
+                      color="white"
                       css={{
                         "&:hover": {
                           backgroundColor: "#020ad4",
@@ -258,6 +253,7 @@ export default function DetailsModal({ facility_id, facilities }) {
                       }}
                     >
                       <Center>
+                        <ExternalLinkIcon mr={2} />
                         <Text color="white">View Details</Text>
                       </Center>
                     </Button>
@@ -270,14 +266,14 @@ export default function DetailsModal({ facility_id, facilities }) {
                   <Center>
                     <Button
                       maxW="container.md"
-                      w="43%"
+                      w={["40%", "35%", "35%", "46%"]}
                       borderColor="#000AFF"
                       borderWidth="3px"
                       bg="blue"
                       position="absolute"
                       bottom="15px"
-                      right={["20px", "40px"]}
-                      color={"white"}
+                      right={["20px", "50px"]}
+                      color="white"
                       _hover={{
                         backgroundColor: "#020ad4",
                       }}
@@ -286,6 +282,7 @@ export default function DetailsModal({ facility_id, facilities }) {
                       }}
                     >
                       <Center>
+                        <EditIcon mr={2} />
                         <Text>Create Review</Text>
                       </Center>
                     </Button>
