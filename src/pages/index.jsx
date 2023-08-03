@@ -133,14 +133,12 @@ export default function Home({ data }) {
     fetchDistance();
 
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position);
       setCoordinate({
         longitude: position.coords.longitude,
         latitude: position.coords.latitude,
       });
     });
     const id = navigator.geolocation.watchPosition((position) => {
-      console.log(position);
       setCoordinate({
         longitude: position.coords.longitude,
         latitude: position.coords.latitude,
