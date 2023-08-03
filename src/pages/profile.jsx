@@ -24,7 +24,7 @@ export default function Profile({ reviewdata }) {
   const [data, setData] = useState([]);
   const defaultImage =
     "https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png";
-  const [facility, setFacility] = useState("");
+  const [facility, setFacility] = useState([]);
 
   const handleLogout = async () => {
     try {
@@ -47,7 +47,8 @@ export default function Profile({ reviewdata }) {
         for(const i in res){
           for(const j in reviewdata){
             if(res[i].facility_id == reviewdata[j].id){
-              setFacility(reviewdata[j]);
+              console.log(reviewdata[j])
+              setFacility((prev) => [...prev, reviewdata[j]]);
             }
           }
         }
@@ -113,8 +114,8 @@ export default function Profile({ reviewdata }) {
                 {user ? (
                   <>
                     {data.length > 0 ? (
-                      data.map((d) => {
-                        return <Review key={v4()} review={d} facility={facility} />;
+                      data.map((d, i) => {
+                        return <Review key={v4()} review={d} facility={facility[i]} />;
                       })
                     ) : (
                       <Text>You have made no review yet!</Text>
