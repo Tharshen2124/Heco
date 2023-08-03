@@ -384,7 +384,11 @@ export default function Home({ data }) {
                 p="2px"
                 onClick={onOpenInfo}
               >
-                <Image src={Info} alt="info-icon" borderRadius={"100%"} />
+                <Image src={Info} alt="info-icon" 
+                style = {{
+                  borderRadius: "100%",
+                }}
+                 />
               </Button>
               <Button
                 maxW="container.md"
