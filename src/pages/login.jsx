@@ -14,7 +14,7 @@ import Back from '../../public/back.svg';
 import LoginIllus from "../../public/login.svg";
 import Image from "next/image";
 import { auth } from "../../firebaseConfig";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect } from "react";
 import router from "next/router";
@@ -24,7 +24,7 @@ export default function Login() {
   const [user, loading, error] = useAuthState(auth);
   const googleLogin = async () => {
     try {
-      await signInWithPopup(auth, googleAuth);
+      await signInWithRedirect(auth, googleAuth);
     } catch (err) {
       console.log(err);
     }
