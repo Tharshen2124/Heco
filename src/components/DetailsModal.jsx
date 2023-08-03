@@ -102,6 +102,8 @@ export default function DetailsModal({ facility_id, facilities }) {
                 alt="hospital-picture"
                 width={250}
                 height={175}
+                borderRadius="10px"
+                shadow="xl"
               />
             ) : (
               <Spinner />
