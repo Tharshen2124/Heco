@@ -290,7 +290,7 @@ export default function Home({ data }) {
                       alt="user-avatar"
                       w="40px"
                       h="40px"
-                      style={{ borderRadius: "100%" }}
+                      borderRadius= "100%"
                       onClick={() => router.push("/profile")}
                       transition="all 0.3s"
                       _hover={{
