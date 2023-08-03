@@ -98,16 +98,6 @@ export default function Details({
         latitude: position.coords.latitude,
       });
     });
-
-    const id = navigator.geolocation.watchPosition((position) => {
-      setCoordinate({
-        longitude: position.coords.longitude,
-        latitude: position.coords.latitude,
-      });
-    });
-    return () => {
-      navigator.geolocation.clearWatch(id);
-    };
   }, []);
 
   useEffect(() => {
