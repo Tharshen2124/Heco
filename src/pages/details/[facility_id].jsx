@@ -1,4 +1,4 @@
-import { ArrowBackIcon, SearchIcon } from "@chakra-ui/icons";
+import { ArrowBackIcon, EditIcon, SearchIcon } from "@chakra-ui/icons";
 import {
   Container,
   Heading,
@@ -46,6 +46,10 @@ export default function Details({ facility, review, images, data }) {
     const url = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(facility.address);
     // Open the URL in a new tab/window
     window.open(url);
+  }
+
+  function openReview() {
+    router.push(`/review/${facility.id}`);
   }
 
   useEffect(() => {
@@ -348,6 +352,25 @@ export default function Details({ facility, review, images, data }) {
             {review.map((i) => {
                 return <Review review={i} key={v4()} />;
             })}
+                  <Button
+                    w="100%"
+                    maxW="container.md"
+                    bg="blue"
+                    color={"white"}
+                    _hover={{
+                      backgroundColor: "#d6d8ff",
+                      color: "#020ad4",
+                    }}
+                    _active={{
+                      backgroundColor: "#020ad4",
+                    }}
+                    onClick={openReview}
+                  >
+                    <Center>
+                      <EditIcon mr={2} />
+                      <Text>Create Review</Text>
+                    </Center>
+                  </Button>
             </VStack>
         </Flex>
         </Flex>
