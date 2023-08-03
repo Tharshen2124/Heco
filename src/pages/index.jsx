@@ -51,7 +51,6 @@ export default function Home({ data }) {
   const [bestFacilityId, setBestFacilityId] = useState("");
   const [facilityId, setFacilityId] = useState("");
   const [facilities, setFacilities] = useState(data);
-  const [location, setLocation] = useState();
 
   const {
     isOpen: isOpenConfig,
@@ -108,7 +107,8 @@ export default function Home({ data }) {
   };
 
   const fetchDistance = async () => {
-    const sources = [`${coordinate.longitude},${coordinate.latitude}`]
+    try{
+      const sources = [`${coordinate.longitude},${coordinate.latitude}`]
         .concat(data.map((i) => `${i.longitude},${i.latitude}`))
         .join(";");
       const url = `https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${sources}?sources=0&annotations=distance&access_token=${process.env.NEXT_PUBLIC_MAP_BOX_ACCESS_TOKEN}`;
@@ -121,6 +121,9 @@ export default function Home({ data }) {
       const res = compute(weight, data);
       setBestFacilityId(res.best_facility);
       setFacilities([...res.temp]);
+    }catch (err){
+        console.log(err);
+    }
   }
 
   useEffect(() => {
@@ -138,15 +141,6 @@ export default function Home({ data }) {
         latitude: position.coords.latitude,
       });
     });
-    const id = navigator.geolocation.watchPosition((position) => {
-      setCoordinate({
-        longitude: position.coords.longitude,
-        latitude: position.coords.latitude,
-      });
-    });
-    return () => {
-        navigator.geolocation.clearWatch(id);
-    }
   }, []);
 
   useEffect(() => {
@@ -200,7 +194,7 @@ export default function Home({ data }) {
             isOpen={isOpenInfo}
             onClose={onCloseInfo}
             isCentered
-            size={"xs"}
+            size={"sm"}
           >
             <InfoModal />
           </Modal>
@@ -290,7 +284,7 @@ export default function Home({ data }) {
                       alt="user-avatar"
                       w="40px"
                       h="40px"
-                      borderRadius="100%"
+                      borderRadius= "100%"
                       onClick={() => router.push("/profile")}
                       transition="all 0.3s"
                       _hover={{
@@ -390,13 +384,7 @@ export default function Home({ data }) {
                 p="2px"
                 onClick={onOpenInfo}
               >
-                <Image
-                  src={Info}
-                  alt="info-icon"
-                  style={{
-                    borderRadius: "100%",
-                  }}
-                />
+                <Image src={Info} alt="info-icon" borderRadius={"100%"} />
               </Button>
               <Button
                 maxW="container.md"
