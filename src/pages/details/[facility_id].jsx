@@ -31,7 +31,7 @@ import { useEffect, useState } from "react";
 import Back from "../../../public/back.svg";
 import Image from "next/image";
 
-export default function Details({ facility, review, images, data }) {
+export default function Details({ facility_id, facility, review, images, data }) {
   const router = useRouter();
   const [cost, setCost] = useState(0);
   const [distance, setDistance] = useState(0);
@@ -49,7 +49,7 @@ export default function Details({ facility, review, images, data }) {
   }
 
   function openReview() {
-    router.push(`/review/${facility.id}`);
+    router.push(`/review/${facility_id}`);
   }
 
   useEffect(() => {
@@ -384,13 +384,12 @@ export async function getServerSideProps(context) {
   const facility = await apiHandler.getFacility(params.facility_id);
   const review = await apiHandler.getReviewOfFacility(params.facility_id);
   const images = await apiHandler.getFacilityImage(params.facility_id);
-  const facilities = await apiHandler.getFacilities();
   return {
     props: {
+      facility_id : params.facility_id,
       facility,
       review,
       images,
-      data: facilities,
     },
   };
 }
