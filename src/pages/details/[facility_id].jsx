@@ -1,4 +1,4 @@
-import { ArrowBackIcon, SearchIcon } from "@chakra-ui/icons";
+import { ArrowBackIcon, EditIcon, SearchIcon } from "@chakra-ui/icons";
 import {
   Container,
   Heading,
@@ -60,6 +60,10 @@ export default function Details({ facility, review, images, data }) {
     const url = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(facility.address);
     // Open the URL in a new tab/window
     window.open(url);
+  }
+
+  function openReview() {
+    router.push(`/review/${facility_id}`);
   }
 
   useEffect(() => {
@@ -148,7 +152,7 @@ export default function Details({ facility, review, images, data }) {
             _hover={{
               cursor: "pointer",
             }}
-            w='40px'
+            w="40px"
           >
             <Image
               src={Back}
@@ -163,7 +167,7 @@ export default function Details({ facility, review, images, data }) {
               {facility.name}
             </Heading>
           </Flex>
-          <VStack >
+          <VStack>
             <HStack pt={5}>
               <Swiper
                 slidesPerView="auto"
@@ -188,42 +192,42 @@ export default function Details({ facility, review, images, data }) {
             </HStack>
             <VStack>
               <HStack pt={5}>
-                  <Text fontWeight="bold">Specialisation </Text>
-                  <SearchIcon />
+                <Text fontWeight="bold">Specialisation </Text>
+                <SearchIcon />
               </HStack>
-                <HStack mt={2}>
-                  <Swiper
-                    slidesPerView="auto"
-                    freeMode={true}
-                    modules={[FreeMode]}
-                    spaceBetween={10}
-                  >
-                    {facility.tags.map((i, index) => (
-                      <SwiperSlide style={{ width: "auto" }} key={v4()}>
-                        <Tag
-                          px="20px"
-                          py="10px"
-                          borderRadius="10px"
-                          userSelect="none"
-                          fontSize="md"
-                          transition={"all 0.2s"}
-                          _hover={{
-                            cursor: "pointer",
-                            backgroundColor: "blue",
-                            color: "white",
-                          }}
-                          marginLeft={index === 0 ? "10px" : 0}
-                          marginRight={
-                            index === facility.tags.length - 1 ? "10px" : 0
-                          }
-                        >
-                          {i}
-                        </Tag>
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
-                </HStack>
-              </VStack>
+              <HStack mt={2}>
+                <Swiper
+                  slidesPerView="auto"
+                  freeMode={true}
+                  modules={[FreeMode]}
+                  spaceBetween={10}
+                >
+                  {facility.tags.map((i, index) => (
+                    <SwiperSlide style={{ width: "auto" }} key={v4()}>
+                      <Tag
+                        px="20px"
+                        py="10px"
+                        borderRadius="10px"
+                        userSelect="none"
+                        fontSize="md"
+                        transition={"all 0.2s"}
+                        _hover={{
+                          cursor: "pointer",
+                          backgroundColor: "blue",
+                          color: "white",
+                        }}
+                        marginLeft={index === 0 ? "10px" : 0}
+                        marginRight={
+                          index === facility.tags.length - 1 ? "10px" : 0
+                        }
+                      >
+                        {i}
+                      </Tag>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </HStack>
+            </VStack>
           </VStack>
 
           <Flex
@@ -344,21 +348,26 @@ export default function Details({ facility, review, images, data }) {
                 </HStack>
               </Box>
               <Button
-                bg="gray.800"
+                bg="#020ad4"
                 mt={8}
                 w="full"
                 color="white"
                 _hover={{
-                  background: "blue",
+                  backgroundColor: "#d6d8ff",
+                  color: "#020ad4",
                 }}
                 onClick={openGoogleMap}
               >
                 <LocationOnIcon /> Direction
               </Button>
-              
             </Flex>
 
-            <Flex direction="column" gap="10px" w="100%" maxW="container.md">
+            <Flex
+              direction="column"
+              gap="10px"
+              w={{ base: "100%", lg: "50%" }}
+              maxW="container.md"
+            >
               <HStack justifyContent="space-between" w="100%" pt={5}>
                 <Text fontWeight="bold">Reviews</Text>
                 <HStack
@@ -381,6 +390,25 @@ export default function Details({ facility, review, images, data }) {
                 {review.map((i) => {
                   return <Review review={i} key={v4()} />;
                 })}
+                  <Button
+                    w="100%"
+                    maxW="container.md"
+                    bg="blue"
+                    color={"white"}
+                    _hover={{
+                      backgroundColor: "#d6d8ff",
+                      color: "#020ad4",
+                    }}
+                    _active={{
+                      backgroundColor: "#020ad4",
+                    }}
+                    onClick={openReview}
+                  >
+                    <Center>
+                      <EditIcon mr={2} />
+                      <Text>Create Review</Text>
+                    </Center>
+                  </Button>
               </VStack>
             </Flex>
           </Flex>
