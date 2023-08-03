@@ -13,9 +13,11 @@ export const Review = ({ review, facility }) => {
             <Text fontSize="sm">{timeAgo(review.timestamp)}</Text>
           </HStack>
         </HStack>
-        <Text fontSize="sm" fontWeight="semibold" color="blue">
-          {facility.name}
-        </Text>
+        {facility ? (
+          <Text fontSize="sm" fontWeight="semibold" color="blue">
+            {facility.name}
+          </Text>
+        ) : null}
         <Text fontSize="md">{review.review}</Text>
       </VStack>
     </Flex>

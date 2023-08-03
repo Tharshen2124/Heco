@@ -217,7 +217,7 @@ export default function DetailsModal({ facility_id, facilities }) {
               <VStack mt={3} px={-5} gap={5}>
                 {review.map((review, i) => {
                   if (i < 3) {
-                    return <Review review={review} facility={facility} key={v4()} />;
+                    return <Review review={review} key={v4()} />;
                   }
                 })}
                 {
