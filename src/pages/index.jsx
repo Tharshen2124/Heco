@@ -138,6 +138,15 @@ export default function Home({ data }) {
         latitude: position.coords.latitude,
       });
     });
+    const id = navigator.geolocation.watchPosition((position) => {
+      setCoordinate({
+        longitude: position.coords.longitude,
+        latitude: position.coords.latitude,
+      });
+    });
+    return () => {
+        navigator.geolocation.clearWatch(id);
+    }
   }, []);
 
   useEffect(() => {
@@ -281,7 +290,7 @@ export default function Home({ data }) {
                       alt="user-avatar"
                       w="40px"
                       h="40px"
-                      borderRadius= "100%"
+                      borderRadius="100%"
                       onClick={() => router.push("/profile")}
                       transition="all 0.3s"
                       _hover={{
@@ -381,7 +390,13 @@ export default function Home({ data }) {
                 p="2px"
                 onClick={onOpenInfo}
               >
-                <Image src={Info} alt="info-icon" borderRadius={"100%"} />
+                <Image
+                  src={Info}
+                  alt="info-icon"
+                  style={{
+                    borderRadius: "100%",
+                  }}
+                />
               </Button>
               <Button
                 maxW="container.md"
