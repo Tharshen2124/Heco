@@ -93,6 +93,10 @@ export const apiHandler = (() => {
         const result = await getDocs(q);
         const ret = [];
         result.forEach(i => ret.push(i.data()));
+        ret.sort(function(a, b) {
+            if (a.timestamp < b.timestamp) return 1;
+            else return -1;
+        });
         return ret;
     }
 
@@ -105,6 +109,10 @@ export const apiHandler = (() => {
         const result = await getDocs(q);
         const ret = [];
         result.forEach(i => ret.push(i.data()));
+        ret.sort(function(a, b) {
+            if (a.timestamp < b.timestamp) return 1;
+            else return -1;
+        });
         return ret;
     }
 
