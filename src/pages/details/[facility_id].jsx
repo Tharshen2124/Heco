@@ -19,7 +19,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper/modules";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import TagFacesIcon from "@mui/icons-material/TagFaces";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
@@ -30,6 +29,7 @@ import { apiHandler } from "@/util/apiHandler";
 import { useEffect, useState } from "react";
 import Back from "../../../public/back.svg";
 import Image from "next/image";
+import SentimentIcon from "@/components/SentimentIcon";
 
 export default function Details({ facility_id, facility, review, images, data }) {
   const router = useRouter();
@@ -343,7 +343,7 @@ export default function Details({ facility_id, facility, review, images, data })
                 }
                 gap={1}
             >
-                <TagFacesIcon />
+                <SentimentIcon sentiment={sentiment}/>
                 <Text fontWeight="bold">{sentiment}</Text>
             </HStack>
             </HStack>
