@@ -194,7 +194,7 @@ export default function Home({ data }) {
             isOpen={isOpenInfo}
             onClose={onCloseInfo}
             isCentered
-            size={"sm"}
+            size={"xs"}
           >
             <InfoModal />
           </Modal>

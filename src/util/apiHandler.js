@@ -15,7 +15,6 @@ export const apiHandler = (() => {
         if (results[0].error !== undefined) {
             throw new Error("Encountered an error:" + results[0].error);
         }
-        console.log(results[0].sentiment);
     }
     getSentiment('LOL')
 

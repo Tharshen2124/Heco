@@ -322,7 +322,12 @@ export default function Details({
             </Button>
           </Flex>
 
-          <Flex direction="column" gap="10px" w="100%" maxW="container.md">
+          <Flex
+            direction="column"
+            gap="10px"
+            w={{ base: "100%", lg: "50%" }}
+            maxW="container.md"
+          >
             <HStack justifyContent="space-between" w="100%" pt={5}>
               <Text fontWeight="bold">Reviews</Text>
               <HStack
@@ -335,8 +340,8 @@ export default function Details({
                     : "red"
                 }
                 gap={1}
-            >
-                <SentimentIcon sentiment={sentiment}/>
+              >
+                <SentimentIcon sentiment={sentiment} />
                 <Text fontWeight="bold">{sentiment}</Text>
               </HStack>
             </HStack>
@@ -351,11 +356,11 @@ export default function Details({
                 bg="blue"
                 color={"white"}
                 _hover={{
-                cursor: "pointer",
-                backgroundColor: "#020ad4",
+                  cursor: "pointer",
+                  backgroundColor: "#020ad4",
                 }}
                 _active={{
-                backgroundColor: "#020ad4",
+                  backgroundColor: "#020ad4",
                 }}
                 onClick={openReview}
               >
