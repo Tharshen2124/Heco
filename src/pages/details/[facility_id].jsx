@@ -384,7 +384,7 @@ export default function Details({ facility, review, images, data }) {
               <Divider mt={2} bg="gray.800" borderWidth="1px" />
               <VStack mt={3} px={-5} gap={5}>
                 {review.map((i) => {
-                  return <Review review={i} facility={facility} key={v4()} />;
+                  return <Review review={i} key={v4()} />;
                 })}
               </VStack>
             </Flex>
