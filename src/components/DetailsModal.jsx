@@ -217,22 +217,21 @@ export default function DetailsModal({ facility_id, facilities }) {
               <VStack mt={3} px={-5} gap={5}>
                 {review.map((review, i) => {
                   if (i < 3) {
-                    return <Review review={review} facility={facility} key={v4()} />;
-                  } else {
-                    return (
-                      <Center key={v4()}>
-                        <Text
-                          color="blue"
-                          fontWeight="bold"
-                          onClick={changePage}
-                          mt={5}
-                        >
-                          Click view details to view more reviews
-                        </Text>
-                      </Center>
-                    );
+                    return <Review review={review} key={v4()} />;
                   }
                 })}
+                {
+                    review.length > 3 ? 
+                    <Center key={v4()}>
+                        <Text
+                            mt={5}
+                        >
+                            Click view details to view more reviews
+                        </Text>
+                    </Center>
+                    :
+                    null
+                }
               </VStack>
               <HStack width="100%">
                 <Link
