@@ -146,6 +146,9 @@ export default function Home({ data }) {
         latitude: position.coords.latitude,
       });
     });
+    return () => {
+        navigator.geolocation.clearWatch(id);
+    }
   }, []);
 
   useEffect(() => {
