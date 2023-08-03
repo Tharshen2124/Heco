@@ -47,7 +47,6 @@ export default function Profile({ reviewdata }) {
         for(const i in res){
           for(const j in reviewdata){
             if(res[i].facility_id == reviewdata[j].id){
-              console.log(reviewdata[j])
               setFacility((prev) => [...prev, reviewdata[j]]);
             }
           }
