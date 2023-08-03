@@ -4,6 +4,21 @@ import { collection, addDoc, doc, getDoc, setDoc, query, where, getDocs } from "
 import { ref, getDownloadURL } from "firebase/storage";
 
 export const apiHandler = (() => {
+    const getSentiment = async (text) => {
+        const client = new TextAnalyticsClient(process.env.NEXT_PUBLIC_COG_SERVICE_ENDPOINT, new AzureKeyCredential(process.env.NEXT_PUBLIC_COG_SERVICE_KEY));
+
+        const documents = [
+            text
+        ];
+    
+        const results = await client.analyzeSentiment(documents);
+        if (results[0].error !== undefined) {
+            throw new Error("Encountered an error:" + results[0].error);
+        }
+        console.log(results[0].sentiment);
+    }
+    getSentiment('LOL')
+
     /*
         review : {
             content,
