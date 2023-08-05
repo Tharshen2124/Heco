@@ -36,19 +36,24 @@ export default function MapAndMarkers({ user, user_coord, facilities, setFacilit
           src={user ? user.photoURL : defaultImage}
           alt="user-avatar"
           width="30px"
-          style={{ borderRadius: "100%" }}
+          style={{ borderRadius: "100%", border: "2px solid blue" }}
         />
       </Marker>
       {facilities.map((i) => (
-        <Marker longitude={i.longitude} latitude={i.latitude} key={v4()} onClick={() => setFacility(i.id)}>
-          <Box _hover={{cursor : 'pointer'}}>
-              {i.status === "suitable" ? (
-                <Image src={GreenMarker} alt="green" />
-              ) : i.status === "mod_suitable" ? (
-                <Image src={YellowMarker} alt="yellow" />
-              ) : (
-                <Image src={RedMarker} alt="red" />
-              )}
+        <Marker
+          longitude={i.longitude}
+          latitude={i.latitude}
+          key={v4()}
+          onClick={() => setFacility(i.id)}
+        >
+          <Box _hover={{ cursor: "pointer" }}>
+            {i.status === "suitable" ? (
+              <Image src={GreenMarker} alt="green" />
+            ) : i.status === "mod_suitable" ? (
+              <Image src={YellowMarker} alt="yellow" />
+            ) : (
+              <Image src={RedMarker} alt="red" />
+            )}
           </Box>
         </Marker>
       ))}
