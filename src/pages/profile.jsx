@@ -23,9 +23,8 @@ export default function Profile({ reviewdata }) {
   const [user, loading, error] = useAuthState(auth);
   const [useDefault, setUseDefault] = useState(false);
   const [data, setData] = useState([]);
-  const defaultImage =
-    "https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png";
   const [facility, setFacility] = useState([]);
+  const defaultImage = "/default_img.png";
 
   const handleLogout = async () => {
     try {

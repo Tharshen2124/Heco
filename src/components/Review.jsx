@@ -3,7 +3,7 @@ import { timeAgo } from "@/util/timeAgo";
 import { Image } from "@chakra-ui/image";
 
 export const Review = ({ review, facility }) => {
-  const defaultImage = "";
+  const defaultImage = "/default_img.png";
   const [useDefault, setUseDefault] = useState(false);
   return (
     <Flex bg="gray.100" borderRadius="10px" boxShadow="xl" p="10px" w="100%">
