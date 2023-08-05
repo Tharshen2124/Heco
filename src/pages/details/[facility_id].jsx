@@ -152,6 +152,7 @@ export default function Details({
                       height={220}
                       style={{ borderRadius: "20px" }}
                       alt=""
+                      objectFit={"cover"}
                     />
                   </SwiperSlide>
                 );

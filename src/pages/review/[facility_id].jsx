@@ -97,6 +97,7 @@ export default function Review({facility, image}) {
                   alt="hospital-picture"
                   width={250}
                   height={175}
+                  objectFit={"cover"}
                 />
               ) : (
                 <Spinner />

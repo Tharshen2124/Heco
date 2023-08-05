@@ -105,6 +105,7 @@ export default function DetailsModal({ facility_id, facilities }) {
                 height={175}
                 borderRadius="10px"
                 shadow="xl"
+                objectFit={"cover"}
               />
             ) : (
               <Spinner />
