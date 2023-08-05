@@ -158,14 +158,11 @@ export default function Details({
               })}
             </Swiper>
           </HStack>
-          <Flex 
-            direction="column"
-            maxW="container.md"
-            w="100%">
-            <HStack pt={5} >
-              <Text fontWeight="bold">Specialisation </Text>
-              <SearchIcon />
-            </HStack>
+          <HStack pt={5}>
+            <Text fontWeight="bold">Specialisation </Text>
+            <SearchIcon />
+          </HStack>
+          <Flex direction="column" maxW="container.md" w="100%">
             <HStack overflowX="hidden" mt={2}>
               <Swiper
                 slidesPerView="auto"
