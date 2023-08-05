@@ -1,6 +1,7 @@
 import { Avatar, HStack, VStack, Text, Box, Spacer, Flex } from "@chakra-ui/react";
 import { timeAgo } from "@/util/timeAgo";
 import { Image } from "@chakra-ui/image";
+import { useState } from "react";
 
 export const Review = ({ review, facility }) => {
   const defaultImage = "/default_img.png";

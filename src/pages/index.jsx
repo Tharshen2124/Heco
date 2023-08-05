@@ -394,7 +394,7 @@ export default function Home({ data }) {
               </Button>
               <Button
                 maxW="container.md"
-                w="100%"
+                w={{ base: "100%", md: "20%" }}
                 bg="#848484"
                 onClick={onOpenConfig}
                 css={{
@@ -415,7 +415,7 @@ export default function Home({ data }) {
               </Button>
               <Button
                 maxW="container.md"
-                w="100%"
+                w={{ base: "100%", md: "20%" }}
                 bg="#000AFF"
                 onClick={locate}
                 css={{
