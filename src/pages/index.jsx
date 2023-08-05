@@ -47,6 +47,7 @@ export default function Home({ data }) {
   const defaultImage =
     "https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png";
   const [user, loading, error] = useAuthState(auth);
+  const [useDefault, setUseDefault] = useState(false);
   const [tags, setTags] = useState({});
   const [bestFacilityId, setBestFacilityId] = useState("");
   const [facilityId, setFacilityId] = useState("");
@@ -280,7 +281,8 @@ export default function Home({ data }) {
                   <Spacer />
                   {user ? (
                     <ChakraImage
-                      src={user ? user.photoURL : defaultImage}
+                      src={!useDefault && user ? user.photoURL : defaultImage}
+                      onError={() => setUseDefault(true)}
                       alt="user-avatar"
                       w="40px"
                       h="40px"

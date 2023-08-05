@@ -1,16 +1,18 @@
 import Image from "next/image";
+import { Image as ChakraImage } from "@chakra-ui/react";
 import Map, { Marker } from "react-map-gl";
 import { v4 } from "uuid";
 import "mapbox-gl/dist/mapbox-gl.css";
 import GreenMarker from "../../public/green_marker.svg";
 import YellowMarker from "../../public/yellow_marker.svg";
 import RedMarker from "../../public/red_marker.svg";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Box } from "@chakra-ui/react";
 
 export default function MapAndMarkers({ user, user_coord, facilities, setFacility }) {
   const map = useRef();
   const defaultImage = "https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png";
+  const [useDefault, setUseDefault] = useState(false);
   useEffect(() => {
     map.current?.flyTo({
       center: [user_coord.longitude, user_coord.latitude],
@@ -32,11 +34,13 @@ export default function MapAndMarkers({ user, user_coord, facilities, setFacilit
       mapStyle="mapbox://styles/mapbox/streets-v9"
     >
       <Marker longitude={user_coord.longitude} latitude={user_coord.latitude}>
-        <img
-          src={user ? user.photoURL : defaultImage}
+        <ChakraImage
+          src={!useDefault && user ? user.photoURL : defaultImage}
+          onError={()=>setUseDefault(true)}
           alt="user-avatar"
           width="30px"
-          style={{ borderRadius: "100%", border: "2px solid blue" }}
+          borderRadius= "100%" 
+          border= "2px solid blue"
         />
       </Marker>
       {facilities.map((i) => (

@@ -21,6 +21,7 @@ import Image from "next/image";
 export default function Profile({ reviewdata }) {
   const router = useRouter();
   const [user, loading, error] = useAuthState(auth);
+  const [useDefault, setUseDefault] = useState(false);
   const [data, setData] = useState([]);
   const defaultImage =
     "https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png";
@@ -88,7 +89,8 @@ export default function Profile({ reviewdata }) {
             <VStack gap="20px">
               <Center>
                 <ChakraImage
-                  src={user ? user.photoURL : defaultImage}
+                  src={!useDefault && user ? user.photoURL : defaultImage}
+                  onError={() => setUseDefault(true)}
                   style={{ borderRadius: "100%" }}
                   alt=""
                   w={"100px"}
